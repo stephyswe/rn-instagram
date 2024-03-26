@@ -1,6 +1,6 @@
-*** NotDev - App 1 - Title: ... ***
+*** NotDev - Instagram ***
 
-# 1. Initial setup
+### 1. Initial setup
 
 Add NODE,JDK info in link
 https://reactnative.dev/docs/environment-setup?os=windows&platform=android&guide=native#jdk-studio
@@ -34,3 +34,6 @@ npm run ios
 * show AndroidManifest.xml & build.grade to install deps directly
 * App.tsx - entry point
 
+### 2. Theme colors & fonts
+
+...
