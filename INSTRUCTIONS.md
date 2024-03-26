@@ -62,3 +62,16 @@ npm i -D @types/react-native-vector-icons
 - android - fonts.gradle to android/app/build.gradle (setup)
 restart app
 ```
+
+### 4. Git
+
+working directory, staging area, repository - local
+```
+git add .
+git commit -m ""
+create repo in github
+push code to repo
+.
+git status
+git fetch
+```
