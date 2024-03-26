@@ -1,6 +1,6 @@
 *** NotDev - Instagram ***
 
-### Default
+### 1. Default
 
 ios packages
 ```
@@ -13,7 +13,7 @@ npm start -- --reset-cache
 npm run android
 ```
 
-### 1. Initial setup
+### 1_2.1 Initial setup
 
 Add NODE,JDK info in link
 https://reactnative.dev/docs/environment-setup?os=windows&platform=android&guide=native#jdk-studio
@@ -47,11 +47,11 @@ npm run ios
 * show AndroidManifest.xml & build.grade to install deps directly
 * App.tsx - entry point
 
-### 2. Theme colors & fonts
+### 2_2.2 Theme colors & fonts
 
 ...
 
-### 3. Vector icons
+### 3_2.3 Vector icons
 
 setup @ https://github.com/oblador/react-native-vector-icons
 icon @ https://oblador.github.io/react-native-vector-icons/
@@ -63,7 +63,7 @@ npm i -D @types/react-native-vector-icons
 restart app
 ```
 
-### 4. Git
+### 4_2.4 Git
 
 working directory, staging area, repository - local
 ```
@@ -75,3 +75,7 @@ push code to repo
 git status
 git fetch
 ```
+
+### 5_3.1 Post component UI
+
+...
