@@ -1,5 +1,18 @@
 *** NotDev - Instagram ***
 
+### Default
+
+ios packages
+```
+npx pod-install ios
+```
+
+android
+```
+npm start -- --reset-cache
+npm run android
+```
+
 ### 1. Initial setup
 
 Add NODE,JDK info in link
@@ -37,3 +50,15 @@ npm run ios
 ### 2. Theme colors & fonts
 
 ...
+
+### 3. Vector icons
+
+setup @ https://github.com/oblador/react-native-vector-icons
+icon @ https://oblador.github.io/react-native-vector-icons/
+```
+npm i --save react-native-vector-icons
+npm i -D @types/react-native-vector-icons
+- ios - UIAppFonts to Info.plist (setup)
+- android - fonts.gradle to android/app/build.gradle (setup)
+restart app
+```
