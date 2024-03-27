@@ -2,6 +2,11 @@
 
 ### 1. Default
 
+fix git issues
+```
+line ending - git config --global core.autocrlf input
+```
+
 ios packages
 ```
 npx pod-install ios
@@ -77,5 +82,9 @@ git fetch
 ```
 
 ### 5_3.1 Post component UI
+
+...
+
+### 5_3.2 Custom component
 
 ...
