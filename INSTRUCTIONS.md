@@ -85,6 +85,14 @@ git fetch
 
 ...
 
-### 5_3.2 Custom component
+### 6_3.2 Custom component
 
 ...
+
+### 7_3.3 Props type safe
+
+debug with console - https://www.youtube.com/watch?v=_Qe-7zXsWaw
+```
+package.json - "start": "react-native start --experimental-debugger",
+npm start - "j" - (opens rn dev tool)
+```
