@@ -96,3 +96,7 @@ debug with console - https://www.youtube.com/watch?v=_Qe-7zXsWaw
 package.json - "start": "react-native start --experimental-debugger",
 npm start - "j" - (opens rn dev tool)
 ```
+
+### 8_3.4 Feed list
+
+...
