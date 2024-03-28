@@ -1,9 +1,9 @@
 import {View, Text, StyleSheet} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import colors from '../../../theme/colors';
-import fonts from '../../../theme/fonts';
-import {IComment} from '../../../types/models';
+import colors from '../../theme/colors';
+import fonts from '../../theme/fonts';
+import {IComment} from '../../types/models';
 
 interface ICommentProps {
   item: IComment;

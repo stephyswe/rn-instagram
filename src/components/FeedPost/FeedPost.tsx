@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../../theme/colors';
 import styles from './styles';
 
-import Comment from './Comment';
+import Comment from '../Comment';
 import {IPost} from '../../types/models';
 
 interface IFeedPost {
