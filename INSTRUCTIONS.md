@@ -100,3 +100,8 @@ npm start - "j" - (opens rn dev tool)
 ### 8_3.4 Feed list
 
 ...
+
+### 9_3.5 State for likes
+
+...
+
