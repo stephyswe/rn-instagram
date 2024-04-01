@@ -7,9 +7,12 @@ fix git issues
 line ending - git config --global core.autocrlf input
 ```
 
+android package: re-run application
+
 ios packages
 ```
 npx pod-install ios
+re-run application
 ```
 
 android
@@ -108,3 +111,11 @@ npm start - "j" - (opens rn dev tool)
 ### 10_3.6 Image Carousel
 
 swipe image: press image and swipe
+
+### 11_3.7 Video Post
+
+```
+npm i react-native-video@5.2.0
+npm i -D @types/react-native-video@^5.0.10
+add fix in android/build.gradle from https://github.com/react-native-video/react-native-video/issues/2468#issuecomment-913709636
+```
