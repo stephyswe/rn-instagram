@@ -105,3 +105,6 @@ npm start - "j" - (opens rn dev tool)
 
 ...
 
+### 10_3.6 Image Carousel
+
+swipe image: press image and swipe
