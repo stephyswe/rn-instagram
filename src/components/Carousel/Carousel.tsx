@@ -45,6 +45,7 @@ const Carousel = ({images, onDoublePress = () => {}}: ICarousel) => {
         )}
         horizontal
         pagingEnabled
+        showsHorizontalScrollIndicator={false}
         viewabilityConfig={viewabilityConfig}
         onViewableItemsChanged={onViewableItemsChanged.current}
       />
