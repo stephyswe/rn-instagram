@@ -1,44 +1,84 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
 import {IComment} from '../../types/models';
+import {useState} from 'react';
 
 interface ICommentProps {
   item: IComment;
+  includeDetails: boolean;
 }
 
-const Comment = ({item}: ICommentProps) => {
+const Comment = ({item, includeDetails = false}: ICommentProps) => {
+  const [isLiked, setIsLiked] = useState(false);
+
+  const toggleLike = () => {
+    setIsLiked(v => !v);
+  };
+
   return (
     <View style={styles.comment}>
-      <Text style={styles.commentText}>
-        <Text style={styles.bold}>{item.user.username}</Text> {item.comment}
-      </Text>
-      <AntDesign name={'hearto'} style={styles.icon} color={colors.black} />
+      {includeDetails && (
+        <Image source={{uri: item.user.image}} style={styles.avatar} />
+      )}
+
+      <View style={styles.middleColumn}>
+        <Text style={styles.commentText}>
+          <Text style={styles.bold}>{item.user.username}</Text> {item.comment}
+        </Text>
+
+        {includeDetails && (
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>2d</Text>
+            <Text style={styles.footerText}>5 likes</Text>
+            <Text style={styles.footerText}>Reply</Text>
+          </View>
+        )}
+      </View>
+
+      <Pressable onPress={toggleLike} hitSlop={5}>
+        <AntDesign
+          name={isLiked ? 'heart' : 'hearto'}
+          style={styles.icon}
+          color={isLiked ? colors.accent : colors.black}
+        />
+      </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  icon: {
-    marginHorizontal: 5,
+  comment: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  text: {
+  middleColumn: {
+    flex: 1,
+  },
+  commentText: {
     color: colors.black,
     lineHeight: 18,
+  },
+  icon: {
+    marginHorizontal: 5,
   },
   bold: {
     fontWeight: fonts.weight.bold,
   },
-  commentText: {
-    color: colors.black,
-    flex: 1,
-    lineHeight: 18,
+  avatar: {
+    width: 40,
+    aspectRatio: 1,
+    borderRadius: 25,
+    marginRight: 5,
   },
-  comment: {
+  footer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    marginBottom: 10,
+  },
+  footerText: {
+    marginRight: 10,
   },
 });
 

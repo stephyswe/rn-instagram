@@ -119,3 +119,7 @@ npm i react-native-video@5.2.0
 npm i -D @types/react-native-video@^5.0.10
 add fix in android/build.gradle from https://github.com/react-native-video/react-native-video/issues/2468#issuecomment-913709636
 ```
+
+### 11_3.8 Comments Page
+
+...
