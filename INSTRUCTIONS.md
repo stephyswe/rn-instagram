@@ -131,3 +131,7 @@ add fix in android/build.gradle from https://github.com/react-native-video/react
 ### 14_3.10 Profile Page
 
 ...
+
+### 15_3.11 Edit Profile UI
+
+...

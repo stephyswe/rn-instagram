@@ -1,11 +1,12 @@
 import {StyleSheet, View} from 'react-native';
 
 import ProfileScreen from './src/screens/ProfileScreen';
+import EditProfileScreen from './src/screens/EditProfileScreen/EditProfileScreen';
 
 const App = () => {
   return (
     <View style={styles.app}>
-      <ProfileScreen />
+      <EditProfileScreen />
     </View>
   );
 };
