@@ -2,6 +2,17 @@
 
 ### 1. Default
 
+enable android phone
+```
+phone:
+- enable dev: settings - about phone - software information - tap build number 7 times
+- settings - dev options - usb debugging: enable
+.
+win:
+- add path: C:\Users\Username\AppData\Local\Android\Sdk\platform-tools
+- cmd - "adb devices" - show one entry
+```
+
 fix git issues
 ```
 line ending - git config --global core.autocrlf input
@@ -159,5 +170,11 @@ Do you want to install the Expo CLI integration? ... no
 git add .
 git commit -m "18: install expo modules"
 .
-expo install expo-camera
+npx expo install expo-camera
+only mac: npx pod-install
+- config ios/instagram/Info.plist
+- config android/app/src/main/AndroidManifest.xml
+- config: android/build.gradle
+.
+chapter - enable android phone
 ```
