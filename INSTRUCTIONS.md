@@ -140,3 +140,10 @@ add fix in android/build.gradle from https://github.com/react-native-video/react
 
 `npm i react-hook-form@^7.20.5`
 
+### 17_3.13 Image picker
+
+```
+https://github.com/react-native-image-picker/react-native-image-picker?tab=readme-ov-file#post-install-steps
+- Select image/video from photos / NSPhotoLibraryUsageDescription
+npm i react-native-image-picker@^4.3.0
+```
