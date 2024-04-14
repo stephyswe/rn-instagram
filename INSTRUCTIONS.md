@@ -147,3 +147,17 @@ https://github.com/react-native-image-picker/react-native-image-picker?tab=readm
 - Select image/video from photos / NSPhotoLibraryUsageDescription
 npm i react-native-image-picker@^4.3.0
 ```
+
+### 18_3.14 Post upload camera
+
+```
+https://docs.expo.dev/versions/latest/sdk/camera/
+https://docs.expo.dev/bare/installing-expo-modules/
+npx install-expo-modules@latest
+Do you want to install the Expo CLI integration? ... no
+.
+git add .
+git commit -m "18: install expo modules"
+.
+expo install expo-camera
+```

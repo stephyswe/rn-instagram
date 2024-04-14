@@ -1,12 +1,11 @@
 import {StyleSheet, View} from 'react-native';
 
-import ProfileScreen from './src/screens/ProfileScreen';
-import EditProfileScreen from './src/screens/EditProfileScreen/EditProfileScreen';
+import PostUploadScreen from './src/screens/PostUploadScreen';
 
 const App = () => {
   return (
     <View style={styles.app}>
-      <EditProfileScreen />
+      <PostUploadScreen />
     </View>
   );
 };
