@@ -135,3 +135,8 @@ add fix in android/build.gradle from https://github.com/react-native-video/react
 ### 15_3.11 Edit Profile UI
 
 ...
+
+### 16_3.12 React Form Hook
+
+`npm i react-hook-form@^7.20.5`
+
