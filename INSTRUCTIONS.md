@@ -210,3 +210,7 @@ https://reactnavigation.org/docs/bottom-tab-navigator
 ```
 npm i @react-navigation/bottom-tabs@^6.0.9
 ```
+
+### 23_4.5 Other screens
+
+...

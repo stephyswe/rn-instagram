@@ -36,6 +36,10 @@ const FeedPost = (props: IFeedPost) => {
     });
   };
 
+  const navigateToComments = () => {
+    navigation.navigate('Comments', {postId: post.id});
+  };
+
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
   const toggleDescriptionExpanded = () => {
@@ -67,6 +71,8 @@ const FeedPost = (props: IFeedPost) => {
       </DoublePressable>
     );
   }
+
+
 
   return (
     <View style={styles.post}>
@@ -139,7 +145,7 @@ const FeedPost = (props: IFeedPost) => {
         </Text>
 
         {/* Comments */}
-        <Text>View all {post.nofComments} comments</Text>
+        <Text onPress={navigateToComments}>View all {post.nofComments} comments</Text>
         {post.comments.map((comment: any) => (
           <Comment key={comment.id} item={comment} />
         ))}
