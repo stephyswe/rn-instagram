@@ -218,3 +218,20 @@ npm i @react-navigation/bottom-tabs@^6.0.9
 ### 24_4.6 Type checking with TypeScript
 
 ...
+
+### 25_4.7 Deep Linking
+
+https://reactnavigation.org/docs/deep-linking/#set-up-with-bare-react-native-projects
+```
+* ios
+- ios/instagram/AppDelegate.mm
+npx uri-scheme add notjustphotos --ios
+npm run ios
+npx uri-scheme open notjustinsta:// --ios
+ios - open safari - search: "notjustphotos://" - open in app
+git add .
+git commit -m "ios deep linking"
+.
+* android
+npx uri-scheme add mychat --android
+```
