@@ -1,19 +1,7 @@
-import {StyleSheet, View} from 'react-native';
-
-import PostUploadScreen from './src/screens/PostUploadScreen';
+import Navigation from './src/navigation';
 
 const App = () => {
-  return (
-    <View style={styles.app}>
-      <PostUploadScreen />
-    </View>
-  );
+  return <Navigation />;
 };
-
-const styles = StyleSheet.create({
-  app: {
-    flex: 1,
-  },
-});
 
 export default App;

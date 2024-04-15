@@ -178,3 +178,12 @@ only mac: npx pod-install
 .
 chapter - enable android phone
 ```
+
+### 19_4.1 Overview and Setup (navigation)
+
+```
+npm i @react-navigation/native@^6.0.6 react-native-screens@^3.10.1 react-native-safe-area-context@^3.4.1
+mac: npx pod-install
+- android/app/src/main/java/.../MainActivity.kt
+- App.tsx
+```
