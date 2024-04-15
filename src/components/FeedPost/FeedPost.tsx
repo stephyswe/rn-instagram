@@ -32,7 +32,7 @@ const FeedPost = (props: IFeedPost) => {
   const navigateToUser = () => {
     // navigate
     navigation.navigate('UserProfile', {
-      user: post.user,
+      userId: post.user.id,
     });
   };
 

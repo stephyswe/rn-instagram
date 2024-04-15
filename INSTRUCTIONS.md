@@ -203,3 +203,10 @@ https://reactnavigation.org/docs/stack-navigator
 ```
 npm i @react-navigation/native-stack@^6.2.5
 ```
+
+### 22_4.4 Bottom Tab Navigator
+
+https://reactnavigation.org/docs/bottom-tab-navigator
+```
+npm i @react-navigation/bottom-tabs@^6.0.9
+```
