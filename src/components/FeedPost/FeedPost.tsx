@@ -128,21 +128,6 @@ const FeedPost = (props: IFeedPost) => {
           Liked by <Text style={styles.bold}>lgrine</Text> and{' '}
           <Text style={styles.bold}>{post.nofLikes} others</Text>
         </Text>
-        {/* Likes */}
-        {/*  {postLikes.length === 0 ? (
-          <Text>Be the first to like the post</Text>
-        ) : (
-          <Text style={styles.text} onPress={navigateToLikes}>
-            Liked by{' '}
-            <Text style={styles.bold}>{postLikes[0]?.User?.username}</Text>
-            {postLikes.length > 1 && (
-              <>
-                {' '}
-                and <Text style={styles.bold}>{post.nofLikes - 1} others</Text>
-              </>
-            )}
-          </Text>
-        )} */}
 
         {/* Post description */}
         <Text style={styles.text} numberOfLines={isDescriptionExpanded ? 0 : 3}>
