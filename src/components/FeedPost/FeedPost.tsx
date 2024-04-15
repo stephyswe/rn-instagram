@@ -10,10 +10,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../../theme/colors';
 import styles from './styles';
 
-import Comment from '../Comment';
-
 import {IPost} from '../../types/models';
+import {FeedNavigationProp} from '../../navigation/types';
 
+import Comment from '../Comment';
 import Carousel from '../Carousel';
 import DoublePressable from '../DoublePressable';
 import VideoPlayer from '../VideoPlayer';
@@ -27,7 +27,7 @@ const FeedPost = (props: IFeedPost) => {
   const {post, isVisible = false} = props;
   const [isLiked, setIsLiked] = useState(false);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<FeedNavigationProp>();
 
   const navigateToUser = () => {
     // navigate
@@ -71,8 +71,6 @@ const FeedPost = (props: IFeedPost) => {
       </DoublePressable>
     );
   }
-
-
 
   return (
     <View style={styles.post}>
@@ -145,7 +143,9 @@ const FeedPost = (props: IFeedPost) => {
         </Text>
 
         {/* Comments */}
-        <Text onPress={navigateToComments}>View all {post.nofComments} comments</Text>
+        <Text onPress={navigateToComments}>
+          View all {post.nofComments} comments
+        </Text>
         {post.comments.map((comment: any) => (
           <Comment key={comment.id} item={comment} />
         ))}

@@ -12,7 +12,9 @@ import ProfileStackNavigator from './ProfileStackNavigator';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import PostUploadScreen from '../screens/PostUploadScreen/PostUploadScreen';
 
-const Tab = createBottomTabNavigator();
+import {BottomTabNavigatorParamList} from './types';
+
+const Tab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
 const BottomTabNavigator = () => {
   return (

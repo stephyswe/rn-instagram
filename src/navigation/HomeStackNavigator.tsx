@@ -6,8 +6,9 @@ import logo from '../assets/images/logo.png';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 
-const Stack = createNativeStackNavigator(); // {  Navigator, Screen }
+import {HomeStackNavigatorParamList} from './types';
 
+const Stack = createNativeStackNavigator<HomeStackNavigatorParamList>(); // {  Navigator, Screen }
 
 const HomeStackNavigator = () => {
   return (

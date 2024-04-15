@@ -214,3 +214,7 @@ npm i @react-navigation/bottom-tabs@^6.0.9
 ### 23_4.5 Other screens
 
 ...
+
+### 24_4.6 Type checking with TypeScript
+
+...
