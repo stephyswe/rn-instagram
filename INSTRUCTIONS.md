@@ -247,3 +247,12 @@ https://reactnavigation.org/docs/configuring-links
 npx uri-scheme open notjustphotos://comments --android/ios
 npx uri-scheme open notjustphotos://user/123 --android/ios
 ```
+
+### 26_4.8 Top Tab Bar
+
+https://reactnavigation.org/docs/material-top-tab-navigator
+```
+npm i @react-navigation/material-top-tabs@^6.1.1 react-native-tab-view@^3.1.1
+npm i react-native-pager-view@^5.4.11
+ios: npx pod-install
+```
