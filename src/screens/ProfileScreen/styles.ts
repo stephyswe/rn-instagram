@@ -4,6 +4,7 @@ import fonts from '../../theme/fonts';
 
 export default StyleSheet.create({
     root: {
+        backgroundColor: '#fff',
         padding: 10,
     },
     headerRow: {
