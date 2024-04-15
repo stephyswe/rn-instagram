@@ -195,3 +195,11 @@ https://reactnavigation.org/docs/stack-navigator
 ```
 npm i @react-navigation/native-stack@^6.2.5
 ```
+
+
+### 21_4.3 Moving Between Screens
+
+https://reactnavigation.org/docs/stack-navigator
+```
+npm i @react-navigation/native-stack@^6.2.5
+```

@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -25,6 +26,15 @@ interface IFeedPost {
 const FeedPost = (props: IFeedPost) => {
   const {post, isVisible = false} = props;
   const [isLiked, setIsLiked] = useState(false);
+
+  const navigation = useNavigation();
+
+  const navigateToUser = () => {
+    // navigate
+    navigation.navigate('UserProfile', {
+      user: post.user,
+    });
+  };
 
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
@@ -68,7 +78,9 @@ const FeedPost = (props: IFeedPost) => {
           }}
           style={styles.userAvatar}
         />
-        <Text style={styles.userName}>{post.user.username}</Text>
+        <Text onPress={navigateToUser} style={styles.userName}>
+          {post.user.username}
+        </Text>
         <Entypo
           name="dots-three-horizontal"
           size={16}
