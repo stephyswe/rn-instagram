@@ -227,11 +227,16 @@ https://reactnavigation.org/docs/deep-linking/#set-up-with-bare-react-native-pro
 - ios/instagram/AppDelegate.mm
 npx uri-scheme add notjustphotos --ios
 npm run ios
+- minimize app
 npx uri-scheme open notjustinsta:// --ios
 ios - open safari - search: "notjustphotos://" - open in app
 git add .
 git commit -m "ios deep linking"
 .
 * android
-npx uri-scheme add mychat --android
+npx uri-scheme add notjustphotos --android
+npm run android
+- minimize app
+npx uri-scheme open notjustphotos:// --android
+- open app
 ```
