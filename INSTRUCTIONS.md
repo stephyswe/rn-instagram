@@ -228,7 +228,7 @@ https://reactnavigation.org/docs/deep-linking/#set-up-with-bare-react-native-pro
 npx uri-scheme add notjustphotos --ios
 npm run ios
 - minimize app
-npx uri-scheme open notjustinsta:// --ios
+npx uri-scheme open notjustphotos:// --ios
 ios - open safari - search: "notjustphotos://" - open in app
 git add .
 git commit -m "ios deep linking"
@@ -238,5 +238,12 @@ npx uri-scheme add notjustphotos --android
 npm run android
 - minimize app
 npx uri-scheme open notjustphotos:// --android
+
 - open app
+```
+
+https://reactnavigation.org/docs/configuring-links
+```
+npx uri-scheme open notjustphotos://comments --android/ios
+npx uri-scheme open notjustphotos://user/123 --android/ios
 ```
