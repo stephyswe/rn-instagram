@@ -368,3 +368,41 @@ login aws Stephy
 (wait)
 - backend - launch studio
 ``` 
+
+### 31_5.5 Connect our app to the backend
+
+docs: https://docs.amplify.aws/react-native/start/getting-started/setup/#install-amplify-libraries
+
+```
+aws Stephy - amplify studio
+- local setup instructions
+* copy command
+.
+cmd rn-instagram:
+* paste command
+.
+- open link
+(retry if not working)
+* select "visual studio code"
+* select "javascript"
+* select "react native"
+* [src] <enter>
+* [/] <enter>
+* [build cmd] <enter>
+* [start cmd] <enter>
+* [modify backend] Y
+.
+cmd rn-instagram:
+* install from docs
+npm install aws-amplify @aws-amplify/react-native @react-native-community/netinfo @react-native-async-storage/async-storage react-native-get-random-values
+.
+ios: 
+npx pod-install
+npm run ios
+.
+* edit App.tsx
+re-run npm start / npm run android
+```
+
+
+
