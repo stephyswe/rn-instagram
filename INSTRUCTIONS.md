@@ -309,6 +309,49 @@ Billing:
 > Create budget
 ```
 
-### 27_5.2 Sign up for an AWS account
+### 27_5.2 Configure Amplify
 
-...
+
+create amplify user
+```
+cmd:
+npm i -g @aws-amplify/cli
+amplify configure
+.
+web: https://console.aws.amazon.com/
+* aws signin - IAM user - account: "..." - 
+> Next - Signin
+.
+cmd: 
+<enter>
+region: eu-north-1
+.
+web:
+enter username: "amplify-user"
+- enable "Provide user access to the AWS Management Console" 
+- select "I want to create an IAM user"
+> Next
+- select "Attach policies directly"
+- enable "AdministratorAccess"
+> Next
+> Create user
+* open user - "create access key"
+- Command Line Interface (CLI)
+> Next
+- description tag: amplify
+> Create access key
+(save access key and secret key)
+> Done
+.
+cmd:
+continue <enter>
+paste <access key>
+paste <secret key>
+default <enter>
+```
+
+```
+bash:
+ls ~/.aws/
+cat ls ~/.aws/credentials / config
+```
