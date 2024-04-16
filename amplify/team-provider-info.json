@@ -10,6 +10,11 @@
       "StackName": "amplify-instagram-staging-3049c",
       "StackId": "arn:aws:cloudformation:eu-north-1:312915967906:stack/amplify-instagram-staging-3049c/21262990-fc26-11ee-b5c6-0afe5f77460e",
       "AmplifyAppId": "d2e0oxvbvt3bx7"
+    },
+    "categories": {
+      "auth": {
+        "instagram": {}
+      }
     }
   }
 }

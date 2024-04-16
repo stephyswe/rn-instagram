@@ -2,6 +2,10 @@
 
 ### 1. Default
 
+amplify: https://docs.amplify.aws/react-native/start/getting-started/installation/
+
+how to setup new Amplify: https://www.youtube.com/watch?v=BGtVw_EEKZ8
+
 enable android phone
 ```
 phone:
@@ -408,6 +412,29 @@ re-run npm start / npm run android
 
 ...
 
-### 32_6.1 Authentication
+### 33_6.2 Basic Authentication
 
-...
+```
+- aws Stephy - amplify studio
+- setup - authentication
+- configure login
+* remove email login
+* add username login
+- configure sign up
+* add attribute - Email + Name
+- "password protection settings"
+* only select "include lowercase characters"
+- "verification message settings"
+* Email 
+> Deploy - Confirm deployment
+(wait)
+cmd rn-instagram:
+run command
+.
+add authentication: https://docs.amplify.aws/react-native/start/getting-started/auth/#add-the-amplify-ui-authenticator-component
+npm install @aws-amplify/ui-react-native --force
+edit App.tsx
+.
+user in aws cognito:
+- aws Stephy - cognito - instagram-staging - users
+```
