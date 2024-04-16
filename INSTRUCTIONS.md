@@ -404,5 +404,10 @@ npm run ios
 re-run npm start / npm run android
 ```
 
+### 32_6.1 Authentication
 
+...
 
+### 32_6.1 Authentication
+
+...
