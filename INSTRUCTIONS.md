@@ -256,3 +256,59 @@ npm i @react-navigation/material-top-tabs@^6.1.1 react-native-tab-view@^3.1.1
 npm i react-native-pager-view@^5.4.11
 ios: npx pod-install
 ```
+
+### 27_5.1 What is AWS Amplify
+
+...
+
+### 27_5.2 Sign up for an AWS account
+
+aws
+```
+- signup
+* IAM
+MFA: Add MFA 
+- Device name: "mc" 
+- Authenticator App 
+- add QR  
+- Assign MFA Device 
+Users:
+- Create User 
+- name: "Stephy" 
+- enable "Provide user access to the AWS Management Console" 
+- select "I want to create an IAM user"
+> Next
+- select "Attach policies directly"
+- enable "AdministratorAccess"
+> Next
+> "Create user"
+* Copy Credentials (3 rows)
+* Open sign-in URL
+.
+* add username, password & sign in 
+* add new password - confirm
+.
+why? disallow billing plan
+* sign out - signin root
+Billing: 
+* usermenu - billing & cost management
+- budgets 
+- create budget 
+- customize
+- cost budget (rec)
+> Next
+* "Enter your budgeted amount ($): 10"
+* "Budget name: 10$ account budget"
+> Next
+> "Add an alert threshold"
+- "threshold: 80"
+- "trigger: forecasted"
+- email: e@.com"
+> Next
+> Next
+> Create budget
+```
+
+### 27_5.2 Sign up for an AWS account
+
+...
