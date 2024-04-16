@@ -261,7 +261,7 @@ ios: npx pod-install
 
 ...
 
-### 27_5.2 Sign up for an AWS account
+### 28_5.2 Sign up for an AWS account
 
 aws
 ```
@@ -309,8 +309,7 @@ Billing:
 > Create budget
 ```
 
-### 27_5.2 Configure Amplify
-
+### 29_5.3 Configure Amplify
 
 create amplify user
 ```
@@ -355,3 +354,17 @@ bash:
 ls ~/.aws/
 cat ls ~/.aws/credentials / config
 ```
+
+### 30_5.4 Create the app backend
+
+```
+web: 
+login aws Stephy 
+- change region to eu-north-1
+- aws amplify
+- new app - build an app
+- name: "instagram"
+- confirm deployment
+(wait)
+- backend - launch studio
+``` 
