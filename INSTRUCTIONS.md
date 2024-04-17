@@ -438,3 +438,9 @@ edit App.tsx
 user in aws cognito:
 - aws Stephy - cognito - instagram-staging - users
 ```
+
+### 34_6.3 Custom Authentication Screens
+
+```
+...
+```
