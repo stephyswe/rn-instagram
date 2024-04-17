@@ -1,13 +1,15 @@
+import {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
+import {useNavigation} from '@react-navigation/core';
+import {useForm} from 'react-hook-form';
+import {signUp} from 'aws-amplify/auth';
+
 import FormInput from '../components/FormInput';
 import CustomButton from '../components/CustomButton';
 import SocialSignInButtons from '../components/SocialSignInButtons';
-import {useNavigation} from '@react-navigation/core';
-import {useForm} from 'react-hook-form';
-import {SignUpNavigationProp} from '../../../types/navigation';
 import colors from '../../../theme/colors';
-import {Auth} from 'aws-amplify';
-import {useState} from 'react';
+
+import {SignUpNavigationProp} from '../../../types/navigation';
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -20,6 +22,7 @@ type SignUpData = {
 };
 
 const SignUpScreen = () => {
+
   const {control, handleSubmit, watch} = useForm<SignUpData>();
   const pwd = watch('password');
   const navigation = useNavigation<SignUpNavigationProp>();
@@ -32,10 +35,12 @@ const SignUpScreen = () => {
     setLoading(true);
 
     try {
-      await Auth.signUp({
+      await signUp({
         username: email,
         password,
-        attributes: {name, email},
+        options: {
+          userAttributes: {name, email},
+        },
       });
 
       navigation.navigate('Confirm email', {email});

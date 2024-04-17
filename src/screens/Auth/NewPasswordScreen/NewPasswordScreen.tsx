@@ -5,7 +5,7 @@ import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
 import {NewPasswordNavigationProp} from '../../../types/navigation';
-import {Auth} from 'aws-amplify';
+import {confirmResetPassword} from 'aws-amplify/auth';
 
 type NewPasswordType = {
   email: string;
@@ -26,7 +26,11 @@ const NewPasswordScreen = () => {
     setLoading(true);
 
     try {
-      await Auth.forgotPasswordSubmit(email, code, password);
+      await confirmResetPassword({
+        username: email,
+        confirmationCode: code,
+        newPassword: password,
+      });
       navigation.navigate('Sign in');
     } catch (e) {
       Alert.alert('Oops', (e as Error).message);

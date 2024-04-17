@@ -5,13 +5,17 @@ import amplifyconfig from './src/amplifyconfiguration.json';
 
 import Navigation from './src/navigation';
 
+import AuthContextProvider from './src/contexts/AuthContext';
+
 Amplify.configure(amplifyconfig);
 
 const App = () => {
   return (
-    <SafeAreaProvider>
-      <Navigation />
-    </SafeAreaProvider>
+    <AuthContextProvider>
+      <SafeAreaProvider>
+        <Navigation />
+      </SafeAreaProvider>
+    </AuthContextProvider>
   );
 };
 

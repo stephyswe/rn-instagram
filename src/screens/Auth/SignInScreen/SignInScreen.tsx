@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {
   View,
   Image,
@@ -6,15 +7,17 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
+import {signIn} from 'aws-amplify/auth';
+
 import Logo from '../../../assets/images/logo.png';
+
 import FormInput from '../components/FormInput';
 import CustomButton from '../components/CustomButton';
 import SocialSignInButtons from '../components/SocialSignInButtons';
-import {useNavigation} from '@react-navigation/native';
-import {useForm} from 'react-hook-form';
+
 import {SignInNavigationProp} from '../../../types/navigation';
-import {Auth} from 'aws-amplify';
-import {useState} from 'react';
 
 type SignInData = {
   email: string;
@@ -33,14 +36,18 @@ const SignInScreen = () => {
       return;
     }
     setLoading(true);
+
     try {
-      await Auth.signIn(email, password);
-    } catch (e) {
-      if ((e as Error).name === 'UserNotConfirmedException') {
+      const {isSignedIn, nextStep} = await signIn({
+        username: email,
+        password,
+      });
+
+      if (!isSignedIn && nextStep.signInStep === 'CONFIRM_SIGN_UP') {
         navigation.navigate('Confirm email', {email});
-      } else {
-        Alert.alert('Oopps', (e as Error).message);
       }
+    } catch (error) {
+      Alert.alert('Oopps', (error as Error).message);
     } finally {
       setLoading(false);
       reset();
@@ -101,6 +108,16 @@ const SignInScreen = () => {
         <CustomButton
           text="Don't have an account? Create one"
           onPress={onSignUpPress}
+          type="TERTIARY"
+        />
+
+        <CustomButton
+          text="Confirm Account"
+          onPress={() =>
+            navigation.navigate('Confirm email', {
+              email: 'devgonnadev@gmail.com',
+            })
+          }
           type="TERTIARY"
         />
       </View>

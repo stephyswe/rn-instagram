@@ -2,6 +2,15 @@
 
 ### 1. Default
 
+debug react native - https://deadsimplechat.com/blog/react-native-debugger/#step-1-setting-up-the-react-native-cli-app
+```
+ex - react native tools
+run and debug - select "create a launch.json"
+select "react native" - "debug android"
+click "debug android"
+in android app - ctrl+m -"debug"
+```
+
 amplify: https://docs.amplify.aws/react-native/start/getting-started/installation/
 
 how to setup new Amplify: https://www.youtube.com/watch?v=BGtVw_EEKZ8
@@ -441,6 +450,4 @@ user in aws cognito:
 
 ### 34_6.3 Custom Authentication Screens
 
-```
-...
-```
+migration guide: https://docs.amplify.aws/javascript/build-a-backend/auth/auth-migration-guide/#authcurrentuserinfo-deprecated
