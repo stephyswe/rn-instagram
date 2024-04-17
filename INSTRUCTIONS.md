@@ -451,3 +451,28 @@ user in aws cognito:
 ### 34_6.3 Custom Authentication Screens
 
 migration guide: https://docs.amplify.aws/javascript/build-a-backend/auth/auth-migration-guide/#authcurrentuserinfo-deprecated
+
+### 35_6.4 Social providers prerequisite
+
+rename project (if req):
+```
+npx react-native-rename "notJust Photos" -b dev.notjust.photos`
+ios: 
+open in xcode - general - change "bundle identifier"
+npx pod-install ios
+.
+mpm start -- --reset-cache
+```
+
+email instead of username (v5-issue /w social login)
+```
+delete all authentication rules
+configure login - remove username - add email
+configure signup - have "email & name"
+> Deploy
+copy & run command in cmd
+re-start app
+```
+
+social provider: https://docs.amplify.aws/react-native/build-a-backend/auth/add-social-provider/
+
