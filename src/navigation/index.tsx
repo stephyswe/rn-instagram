@@ -5,7 +5,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 
 import CommentsScreen from '../screens/CommentsScreen/CommentsScreen';
 
-import {RootNavigatorParamList} from './types';
+import {RootNavigatorParamList} from '../types/navigation';
 
 const Stack = createNativeStackNavigator<RootNavigatorParamList>(); // { Navigator, Screen }
 

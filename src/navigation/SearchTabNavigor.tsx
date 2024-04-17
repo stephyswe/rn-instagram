@@ -6,7 +6,7 @@ import colors from '../theme/colors';
 import CommentsScreen from '../screens/CommentsScreen/CommentsScreen';
 import UserSearchScreen from '../screens/UserSearchScreen/UserSearchScreen';
 
-import {SearchTabNavigatorParamList} from './types';
+import {SearchTabNavigatorParamList} from '../types/navigation';
 
 const Tab = createMaterialTopTabNavigator<SearchTabNavigatorParamList>();
 

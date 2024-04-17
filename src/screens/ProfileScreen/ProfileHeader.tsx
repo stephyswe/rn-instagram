@@ -6,8 +6,8 @@ import user from '../../assets/data/user.json';
 
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
-import {ProfileNavigationProp} from '../../navigation/types';
-import { signOut } from 'aws-amplify/auth';
+import {ProfileNavigationProp} from '../../types/navigation';
+import {signOut} from 'aws-amplify/auth';
 
 const ProfileHeader = () => {
   const navigation = useNavigation<ProfileNavigationProp>();

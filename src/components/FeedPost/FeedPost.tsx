@@ -11,7 +11,7 @@ import colors from '../../theme/colors';
 import styles from './styles';
 
 import {IPost} from '../../types/models';
-import {FeedNavigationProp} from '../../navigation/types';
+import {FeedNavigationProp} from '../../types/navigation';
 
 import Comment from '../Comment';
 import Carousel from '../Carousel';

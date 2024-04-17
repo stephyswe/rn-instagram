@@ -12,7 +12,7 @@ import SearchTabNavigator from './SearchTabNavigor';
 
 import PostUploadScreen from '../screens/PostUploadScreen/PostUploadScreen';
 
-import {BottomTabNavigatorParamList} from './types';
+import {BottomTabNavigatorParamList} from '../types/navigation';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
