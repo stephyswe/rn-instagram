@@ -623,3 +623,35 @@ App
 npm install @aws-amplify/rtn-web-browser --force
 * edit SocialSignInButtons
 ```
+### 37_6.6 In-app Browser
+
+NONE-required in new Amplify version
+
+otherwise
+```
+npm i react-native-inappbrowser-reborn@^3.6.3
+
+const urlOpener = async (url: string, redirectUrl: string) => {
+  await InAppBrowser.isAvailable();
+  const response = await InAppBrowser.openAuth(url, redirectUrl, {
+    showTitle: false,
+    enableUrlBarHiding: true,
+    enableDefaultShare: false,
+    ephemeralWebSession: false,
+  });
+
+  if (response.type === 'success') {
+    Linking.openURL(response.url);
+  }
+};
+
+const updatedConfig = {
+  ...config,
+  oauth: {
+    ...config.oauth,
+    redirectSignIn: 'notjustphotos://',
+    redirectSignOut: 'notjustphotos://',
+    urlOpener,
+  },
+};
+```
