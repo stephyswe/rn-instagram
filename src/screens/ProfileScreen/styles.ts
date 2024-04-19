@@ -4,7 +4,6 @@ import fonts from '../../theme/fonts';
 
 export default StyleSheet.create({
     root: {
-        backgroundColor: '#fff',
         padding: 10,
     },
     headerRow: {
@@ -21,6 +20,7 @@ export default StyleSheet.create({
     numberContainer: {
         alignItems: 'center',
     },
+    
     numberText: {
         fontSize: fonts.size.md,
         fontWeight: fonts.weight.full,
@@ -28,6 +28,9 @@ export default StyleSheet.create({
     },
     name: {
         fontWeight: fonts.weight.semi,
+        color: colors.black,
+    },
+    bio: {
         color: colors.black,
     },
 });

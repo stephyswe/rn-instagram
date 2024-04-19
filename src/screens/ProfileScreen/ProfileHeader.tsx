@@ -35,7 +35,7 @@ const ProfileHeader = () => {
       </View>
 
       <Text style={styles.name}>{user.name}</Text>
-      <Text>{user.bio}</Text>
+      <Text style={styles.bio}>{user.bio}</Text>
 
       {/* Button */}
       <View style={{flexDirection: 'row'}}>
