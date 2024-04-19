@@ -655,3 +655,89 @@ const updatedConfig = {
   },
 };
 ```
+
+### 38_6.7 Lamda triggers
+
+https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html
+
+amplify steps
+```
+amplify update auth
+.
+- Walkthrough all the auth configurations
+- User Sign-Up, Sign-In, connected with AWS IAM controls (Enables per-user Storage features for images or other content, Analytics, and more) 
+* Allow unauthenticated logins?: No
+* Do you want to enable 3rd party authentication providers in your identity pool?: No
+* Do you want to add User Pool Groups?: No
+* Do you want to add an admin queries API?: No
+.
+* Multifactor authentication (MFA) user login options: OFF
+* Email based user registration/forgot password: Enabled
+* Specify an email verification subject: <Enter, Verification code: {####}>
+* Specify an email verification message: <Enter, Verification code: {####}>
+* Do you want to override the default password policy for this User Pool?: No
+* Specify the app's refresh token expiration period (in days): <Enter, 30>
+* Do you want to specify the user attributes this app can read and write?: No
+.
+* Do you want to enable any of the following capabilities?: <Enter>
+* Do you want to use an OAuth flow?: Yes
+*  What domain name prefix do you want to use? <Enter>
+.
+FIX if not notjustphotos://
+* Which redirect signin URIs do you want to edit?
+.
+*  Do you want to add redirect signin URIs?: No
+FIX if not notjustphotos://
+* Which redirect signout URIs do you want to edit?
+.
+* Do you want to add redirect signout URIs?: No
+* Select the OAuth flows enabled for this project: Authorization code grant
+* Select the OAuth scopes enabled for this project.: <Enter>
+* Select the identity providers you want to configure for your user pool: <Enter, Select NONE, otherwise re-enter credentials>
+.
+
+(what we wanted)
+* Do you want to configure Lambda Triggers for Cognito?: Yes
+* Which triggers do you want to enable for Cognito: Post Confirmation <space, enter>
+* What functionality do you want to use for Post Confirmation: Create your own module <space, enter>
+*  Do you want to edit your custom function now?: No
+```
+
+app
+```
+validate folder ampify/backendfunction/instagramPostConfirmation
+- add in src/custom.js - console.log('lambda'); console.log(event);
+
+cmd: 
+amplify push - Yes
+
+- re-run app / signin with google - validate work
+
+(open amplify with console)
+amplify console
+
+(Amplify Studio)
+Setup - Functions - Deployed functions resources (one entry - instagramPostConfirmation) - Open!
+- Code source - valdiate custom.js has console logs
+- Monitor tab - (in not appear, make sure to delete user first)
+
+delete user
+.
+Signout user in app
+Aws Cognito - user: instagram-staging
+- open google user 
+- Actions: disable user access - disable
+- (back to user pool - instagram-staging)
+- select google user - Delete user
+.
+
+re-signin google in app
+
+.
+- validate Aws Cognito show [new] google user
+
+- view Lamba function again - Monitor tab
+- View CloudWatch logs - 
+- select Log streams - one entry - open
+- dropdown event log - (validate contain userName: 'google')
+```
