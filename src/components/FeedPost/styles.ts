@@ -4,6 +4,9 @@ import fonts from '../../theme/fonts';
 
 export default StyleSheet.create({
     post: {},
+    textBlack: {
+        color: colors.black
+    },
     image: {
         width: '100%',
         aspectRatio: 1,
@@ -25,6 +28,7 @@ export default StyleSheet.create({
     },
     threeDots: {
         marginLeft: 'auto',
+        color: colors.black
     },
     footer: {
         padding: 10,

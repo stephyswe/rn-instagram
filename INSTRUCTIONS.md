@@ -741,3 +741,108 @@ re-signin google in app
 - select Log streams - one entry - open
 - dropdown event log - (validate contain userName: 'google')
 ```
+
+### 39_7.3 Data Modeling (LONG!)
+
+https://docs.amplify.aws/react-native/build-a-backend/graphqlapi/set-up-graphql-api/
+
+```
+(Amplify Studio)
+Setup - Data 
+- Add model (User)
+name              - String!   (is required)
+email             - String!
+username          - String
+bio               - String
+website           - AWSURL
+nofPosts          - Int!
+nofFollowers      - Int!
+nofFollowings     - Int!
+image             - String
+.
+- Add model (Post)
+description       - String
+image             - String
+images            - [String!]
+video             - String
+nofComments       - Int!
+nofLikes          - Int!
+.
+- Add model (Comment)
+comment           - String!
+.
+- Add model (Like)
+comment           - String!
+.
+
+(relationship)
+* User
+Post    - 1:n
+Comment - 1:n
+Like    - 1:n
+
+* Post
+Like    - 1:n
+Comment - 1:n
+
+> Save and Deploy
+
+run pull command in cmd
+```
+
+app
+```
+validate folder creation amplify/backend/api
+.
+amplify add codegen
+* Choose the code generation language target: typescript
+* Enter the file name pattern of graphql queries, mutations and subscriptions: <Enter>
+* Do you want to generate/update all possible GraphQL operations - queries, mutations and subscriptions: Yes
+* Enter maximum statement depth [increase from default if your schema is deeply nested]: <Enter, 2>
+* Enter the file name for the generated code: src/API.ts
+* Do you want to generate code for your newly created GraphQL API: Yes
+
+(Amplify Studio)
+- Manage - Content
+
+* Post - Autogenerate - (not working)
+* User - Autogenerate - 10
+(contraints)
+name - first name - 
+bio  - sen. length - 15-20
+
+amplify console api
+Select from one of the below mentioned services: GraphQL
+
+AWS AppSync - instagram_staging - Queries - 
+- update schema.graphql in amplify/backend/api/ - with @belongsTo
+amplify push -yes
+
+- AwsSync - Queries - create Posts
+.
+mutation myMutation {
+  createPost(input: {nofComments: 0, nofLikes: 0, userID: [FROM listUsers]})
+}
+.
+listPosts { items { User { id }}}
+.
+
+get listPost query to HomeScreen.tsx
+- src/graphql/queries/listPosts query
+
+- add listPosts to HomeScreen.tsx
+.
+import {generateClient} from 'aws-amplify/api';
+const client = generateClient();
+
+const fetchPosts = async () => {
+  const response = await client.graphql({query: listPosts});
+  console.log(response);
+};
+
+useEffect(() => {
+  fetchPosts();
+}, []);
+.
+re-run app and check "data" in log
+```

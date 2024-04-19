@@ -10,16 +10,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../../theme/colors';
 import styles from './styles';
 
-import {IPost} from '../../types/models';
 import {FeedNavigationProp} from '../../types/navigation';
 
 import Comment from '../Comment';
 import Carousel from '../Carousel';
 import DoublePressable from '../DoublePressable';
 import VideoPlayer from '../VideoPlayer';
+import {Post} from '../../API';
+import {DEFAULT_USER_IMAGE} from '../../config';
 
 interface IFeedPost {
-  post: IPost;
+  post: Post;
   isVisible?: boolean;
 }
 
@@ -31,9 +32,11 @@ const FeedPost = (props: IFeedPost) => {
 
   const navigateToUser = () => {
     // navigate
-    navigation.navigate('UserProfile', {
-      userId: post.user.id,
-    });
+    if (post.User) {
+      navigation.navigate('UserProfile', {
+        userId: post.User.id,
+      });
+    }
   };
 
   const navigateToComments = () => {
@@ -78,12 +81,12 @@ const FeedPost = (props: IFeedPost) => {
       <View style={styles.header}>
         <Image
           source={{
-            uri: post.user.image,
+            uri: post.User?.image || DEFAULT_USER_IMAGE,
           }}
           style={styles.userAvatar}
         />
         <Text onPress={navigateToUser} style={styles.userName}>
-          {post.user.username}
+          {post.User?.username}
         </Text>
         <Entypo
           name="dots-three-horizontal"
@@ -135,23 +138,23 @@ const FeedPost = (props: IFeedPost) => {
 
         {/* Post description */}
         <Text style={styles.text} numberOfLines={isDescriptionExpanded ? 0 : 3}>
-          <Text style={styles.bold}>{post.user.username}</Text>{' '}
+          <Text style={styles.bold}>{post.User?.username}</Text>{' '}
           {post.description}
         </Text>
-        <Text onPress={toggleDescriptionExpanded}>
+        <Text style={styles.textBlack} onPress={toggleDescriptionExpanded}>
           {isDescriptionExpanded ? 'less' : 'more'}
         </Text>
 
         {/* Comments */}
-        <Text onPress={navigateToComments}>
+        <Text style={styles.textBlack} onPress={navigateToComments}>
           View all {post.nofComments} comments
         </Text>
-        {post.comments.map((comment: any) => (
-          <Comment key={comment.id} item={comment} />
-        ))}
+        {(post.Comments?.items || [])?.map(
+          comment => comment && <Comment key={comment.id} item={comment} />,
+        )}
 
         {/* Posted date */}
-        <Text>{post.createdAt}</Text>
+        <Text style={styles.textBlack}>{post.createdAt}</Text>
       </View>
     </View>
   );

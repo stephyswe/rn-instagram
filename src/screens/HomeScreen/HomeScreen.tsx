@@ -1,12 +1,65 @@
-import {useRef, useState} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import {FlatList, ViewToken, ViewabilityConfig} from 'react-native';
-
-import posts from '../../assets/data/posts.json';
+import {generateClient} from 'aws-amplify/api';
 
 import FeedPost from '../../components/FeedPost';
 
+export const listPosts = /* GraphQL */ `
+query ListPosts(
+  $filter: ModelPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      description
+      image
+      images
+      video
+      nofComments
+      nofLikes
+      userID
+      createdAt
+      updatedAt
+      __typename
+      User {
+        id
+        name
+        username
+        image
+      }
+      Comments {
+        items {
+          id
+          comment
+          User {
+            id
+            name
+            username
+          }
+        }
+      }
+    }
+    nextToken
+    __typename
+  }
+}`;
+
 const HomeScreen = () => {
   const [activePostId, setActivePostId] = useState<string | null>(null);
+  const [posts, setPosts] = useState([]);
+
+  const client = generateClient();
+
+  const fetchPosts = async () => {
+    const response = await client.graphql({query: listPosts});
+    setPosts(response.data.listPosts.items);
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   const viewabilityConfig: ViewabilityConfig = {
     itemVisiblePercentThreshold: 51,
