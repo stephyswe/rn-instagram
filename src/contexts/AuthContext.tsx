@@ -1,12 +1,4 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import {Hub} from 'aws-amplify/utils';
 import {HubCallback} from '@aws-amplify/core';
 import {getCurrentUser} from 'aws-amplify/auth';
@@ -15,7 +7,6 @@ type UserType = UserData | null | undefined;
 
 type AuthContextType = {
   user: UserType;
-  setUser: Dispatch<SetStateAction<UserType>>;
 };
 
 type UserData = {
@@ -25,7 +16,6 @@ type UserData = {
 
 const AuthContext = createContext<AuthContextType>({
   user: undefined,
-  setUser: () => {},
 });
 
 const AuthContextProvider = ({children}: {children: ReactNode}) => {
@@ -63,11 +53,7 @@ const AuthContextProvider = ({children}: {children: ReactNode}) => {
     return () => hubListenerCancel();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{user, setUser}}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{user}}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContextProvider;

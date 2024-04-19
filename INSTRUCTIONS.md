@@ -476,3 +476,150 @@ re-start app
 
 social provider: https://docs.amplify.aws/react-native/build-a-backend/auth/add-social-provider/
 
+### 36_6.5 Social providers
+
+!! FACEBOOK NOT WORKING unless BUSINESS OWNER!
+
+https://docs.amplify.aws/react-native/build-a-backend/auth/add-social-provider/
+
+FACEBOOK
+```
+signup dev - https://developers.facebook.com/ 
+- register
+- verify account - mobile num
+- contact info - agreement
+- about you - developer
+- complete registration
+.
+create app:
+- Add use case - Authenticate and request data from users with Facebook Login
+- Login type - No, I'm not building a game
+- App detail - notJust photos
+> Create app
+.
+custom app:
+app settings - basic
+* save app id & secret
+```
+
+GOOGLE 
+```
+start - https://console.cloud.google.com/getting-started
+project - new project
+notJust photos
+> create
+- open project
+* APIs & services - credentials
+.
+- configure consent screen
+* external - create
+app information
+* name: notJust Photos
+* email / developer email: <same>
+> Save and continue x2
+* test users - add users - <email> - add
+> Save and continue
+> Back to dashboard
+- credentials - create credentials - oauth client id - web application - create
+* save id and secret
+```
+
+Amplify Studio
+```
+FACEBOOK
+- Authentication - add login mechanism - Facebook
+* add id and secret
+* sign in & sign-out URLS - "notjustphotos://"
+- based on: android/app/src/main/AndroidManifest.xml - android:scheme
+
+GOOGLE
+- Authentication - add login mechanism - Facebook
+* add id and secret
+
+copy <redirect url>
+
+> Deploy 
+run command in cmd
+
+Issue fix when URL cannot be set: 
+- "add placeholder: https://notjustphoto.dev"
+aws - cognito - user pool - "instagram-staging" - app integration - app client list -> "clientWeb" / "client"
+- Hosted UI - edit URL - save changes
+.
+*  if aws-exports.js - redirectSignIn/Out URL is wrong do
+- App.tsx - 
+const updatedConfig = {
+  ...config,
+  oauth: {
+    ...config.oauth,
+    redirectSignIn: 'notjustphotos://',
+    redirectSignOut: 'notjustphotos://',
+    urlOpener,
+  },
+};
+Amplify.configure(updatedConfig);
+```
+
+Complete Facebook
+```
+https://developers.facebook.com/
+App settings - basic 
+.
+- add platform - Website
+> Next
+site URL: <paste redirect url>
+.
+add Privacy Policy URL: (generated policy)
+add Data Deletion instruction: (generated policy)
+add app Domains: <redirect url until .com>
+.
+App icon: <https://placehold.co/512x512/png>
+Category: "Messaging"
+.
+> Save changes
+.
+
+PRODUCT APP *Require Business, otherwise domain issue*
+* Publish app
+Products - Facebook Login - settings - Client Oath settings 
+* valid Oauth Redirect URIs: <redirect url>
+* Allowed Domains for the JS SDK: <redirect url until .com>
+> Save changes
+.
+- Generate Privacy Policy URL
+- https://privacypolicies.com
+- start here - app 
+> Next step
+- name: 
+- check individual
+- country <country>
+> Next step
+- user collection: "email address", "first name..", "social media"
+- device collection: "camera", "location"
+- contact: by email - add <email>
+> Next step
+- provision : "no Pro"
+> Next step
+- add <email>
+>  Generate
+> Copy
+```
+
+Complete Google
+```
+https://console.cloud.google.com/
+credentials - web client 1 
+* authorized JavaScript origins: <redirect url until .com>
+* authorized redirect URIs: <redirect url>
+> Save
+.
+VALIDATE user creation
+login as google
+Amplify Studio - User management - <email> with status EXTERNAL_PROVIDER
+```
+
+App 
+```
+npm install @aws-amplify/rtn-web-browser --force
+* edit SocialSignInButtons
+```

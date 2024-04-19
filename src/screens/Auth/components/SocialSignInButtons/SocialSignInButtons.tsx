@@ -1,15 +1,20 @@
-import React from 'react';
 import {Alert} from 'react-native';
 import CustomButton from '../CustomButton';
-import {Auth} from 'aws-amplify';
-import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth';
+import {signInWithRedirect} from 'aws-amplify/auth';
 
+enum AuthType {
+  Amazon = 'Amazon',
+  Apple = 'Apple',
+  Facebook = 'Facebook',
+  Google = 'Google',
+}
 const SocialSignInButtons = () => {
   const onSignInFacebook = async () => {
     try {
-      await Auth.federatedSignIn({
-        provider: CognitoHostedUIIdentityProvider.Facebook,
-      });
+      // TODO: require Facebook Business Verification first!
+      /*  await signInWithRedirect({
+        provider: AuthType.Facebook,
+      }); */
     } catch (e) {
       Alert.alert('Ops', (e as Error).message);
     }
@@ -17,8 +22,8 @@ const SocialSignInButtons = () => {
 
   const onSignInGoogle = async () => {
     try {
-      await Auth.federatedSignIn({
-        provider: CognitoHostedUIIdentityProvider.Google,
+      await signInWithRedirect({
+        provider: AuthType.Google,
       });
     } catch (e) {
       Alert.alert('Ops', (e as Error).message);
