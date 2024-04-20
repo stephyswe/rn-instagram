@@ -1,65 +1,29 @@
-import {useRef, useState, useEffect} from 'react';
-import {FlatList, ViewToken, ViewabilityConfig} from 'react-native';
-import {generateClient} from 'aws-amplify/api';
+import {useRef, useState} from 'react';
+import {
+  FlatList,
+  ViewToken,
+  ViewabilityConfig,
+  ActivityIndicator,
+} from 'react-native';
+import {useQuery} from '@apollo/client';
 
 import FeedPost from '../../components/FeedPost';
+import ApiErrorMessage from '../../components/ApiErrorMessage';
 
-export const listPosts = /* GraphQL */ `
-query ListPosts(
-  $filter: ModelPostFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      description
-      image
-      images
-      video
-      nofComments
-      nofLikes
-      userID
-      createdAt
-      updatedAt
-      __typename
-      User {
-        id
-        name
-        username
-        image
-      }
-      Comments {
-        items {
-          id
-          comment
-          User {
-            id
-            name
-            username
-          }
-        }
-      }
-    }
-    nextToken
-    __typename
-  }
-}`;
+import {listPosts} from './queries';
+
+import {ListPostsQuery, ListPostsQueryVariables} from '../../API';
 
 const HomeScreen = () => {
   const [activePostId, setActivePostId] = useState<string | null>(null);
-  const [posts, setPosts] = useState([]);
-
-  const client = generateClient();
-
-  const fetchPosts = async () => {
-    const response = await client.graphql({query: listPosts});
-    setPosts(response.data.listPosts.items);
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  const {data, loading, error} = useQuery<
+    ListPostsQuery,
+    ListPostsQueryVariables
+  >(listPosts, {
+    variables: {
+      limit: 10,
+    },
+  });
 
   const viewabilityConfig: ViewabilityConfig = {
     itemVisiblePercentThreshold: 51,
@@ -72,12 +36,25 @@ const HomeScreen = () => {
       }
     },
   );
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
+  if (error) {
+    return (
+      <ApiErrorMessage title="Error fetching posts" message={error.message} />
+    );
+  }
+
+  const posts = data?.listPosts?.items || [];
+
   return (
     <FlatList
       data={posts}
-      renderItem={({item}) => (
-        <FeedPost isVisible={item.id === activePostId} post={item} />
-      )}
+      renderItem={({item}) =>
+        item && <FeedPost isVisible={item.id === activePostId} post={item} />
+      }
       showsVerticalScrollIndicator={false}
       viewabilityConfig={viewabilityConfig}
       onViewableItemsChanged={onViewableItemsChanged.current}

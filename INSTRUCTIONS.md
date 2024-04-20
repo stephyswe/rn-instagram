@@ -903,3 +903,32 @@ mutation MyMutation {
 }
 .
 ```
+
+### 41_7.6 Setup Apollo client
+
+!! Emulator Android not working - signin email/pw - Unknown error in signIn method from import {signIn} from 'aws-amplify/auth';
+
+https://www.apollographql.com/docs/react/get-started/
+
+```
+npm i @apollo/client@^3.5.10 graphql@^14.7.0 --legacy-peer-deps
+
+* apollo links [middleware]
+- https://docs.amplify.aws/javascript/build-a-backend/graphqlapi/upgrade-guide/
+
+npm i aws-appsync-auth-link@^3.0.7 aws-appsync-subscription-link@^3.0.10 --legacy-peer-deps
+- edit apollo/Client.tsx & screens/HomeScreen.tsx
+
+validate listPosts: 
+* add nonExistingField to queries.ts in HomeScreen
+* ApiError show up 
+
+refactor Button with inline prop
+
+.
+fix: re-run app, if error fix so metro understand .cjs files - 
+* https://stackoverflow.com/questions/70071602/main-module-field-cannot-be-resolved-after-installing-apollo-client
+* https://github.com/apollographql/apollo-client/releases/tag/v3.5.4
+inner fix: "please adjust your hateImpl"
+* https://github.com/aws-amplify/amplify-cli/issues/3295
+```
