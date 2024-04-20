@@ -846,3 +846,60 @@ useEffect(() => {
 .
 re-run app and check "data" in log
 ```
+
+### 40_7.4 Create users on signUp
+
+```
+https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/dynamodb/actions/document-client/get.js
+
+(Aws Amplify)
+- GraphQL API - deployed resources (instagram)
+- Data sources - UserTable - Resources - open "User-"
+- Explore items - Items returned (open entry)
+. "UserNUM-env" corresponds to 
+. - Aws - Dynamodb - Tables - "USERNUM-env"
+.
+- Aws - Lamda - "InstagramPostConfirmation" - Configuration - Environment variables
+
+* Update PostConfirmation (func) to access API
+amplify update function
+* Select the Lambda function you want to update: InstagramPostConfirmation
+* Which setting do you want to update?: Resource access permissions
+* Select the categories you want this function to have access to.: api - <select, Enter>
+* Select the operations you want to permit on instagram: Query, Mutation
+"""
+API_INSTAGRAM_GRAPHQLAPIENDPOINTOUTPUT
+API_INSTAGRAM_GRAPHQLAPIIDOUTPUT <-- we use this!
+API_INSTAGRAM_GRAPHQLAPIKEYOUTPUT
+"""
+* Do you want to edit the local lambda function now?: No
+- edit custom.js
+.
+
+* open amplify/backend/function/../src/instagramPostConfirmation-cloudformation-template.json 
+- add LambdaDynamoDBPolicy in Resources
+
+amplify push // not working just re-try
+
+* visit  amplify/function/insta../src/
+yarn add aws-sdk
+
+* validate registrate new account (alt. del old id/pw user)
+Aws Studio - User Management - delete account <email, w/o EXTERNAL_PROVIDER>
+Aws Cognito - User pools - Users - "instagram_staging"
+
+* register new account, confirm account and cloudWatch log
+- validate Cognito - Users - new account appear
+- validate DynamoDB - tables - "User-" - "explore table items" - ...
+- validate Lambda - "instagramPostConfirmation-staging" - Monitor - view CloudWatch log - [latest log] - 
+* make sure "User 90fc69cc-f091-7088-bcdc-b47edc561acf has been saved to the database" exists in log
+- validate AWS Studio - Content - User table - new user appear
+- also, validate AWS AppSync - Queries - listUsers [id,name] - new user apper
+
+fix: del user if wrong from Users DB in AppSync - Mutation
+.
+mutation MyMutation {
+  deleteUser(input: {id: ""})
+}
+.
+```
