@@ -932,3 +932,22 @@ fix: re-run app, if error fix so metro understand .cjs files -
 inner fix: "please adjust your hateImpl"
 * https://github.com/aws-amplify/amplify-cli/issues/3295
 ```
+
+### 42_7.7 Users CRUD
+
+```
+* update depth of graphql from 2to 3 (allow items in user.Posts)
+amplify codegen configure
+* Choose the code generation language target: typescript
+* Enter the file name pattern of graphql queries, mutations and subscriptions: <Enter>
+* Enter the file name for the generated code: <Enter>
+* Enter maximum statement depth [increase from default if your schema is deeply nested] (2): 3
+amplify codegen
+- validate API.ts - GetUserQuery - has 3 depth (items)
+
+Commit: ProfileScreen queries & replace types/model with API
+
+fix: error app ProfileScreen
+- check if Posts in AWS Studio has null values on image, if so delete that post
+
+```

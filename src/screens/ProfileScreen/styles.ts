@@ -30,7 +30,7 @@ export default StyleSheet.create({
         fontWeight: fonts.weight.semi,
         color: colors.black,
     },
-    bio: {
+    textBlack: {
         color: colors.black,
     },
 });

@@ -1,21 +1,38 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import {Hub} from 'aws-amplify/utils';
 import {HubCallback} from '@aws-amplify/core';
-import {getCurrentUser} from 'aws-amplify/auth';
+import {fetchAuthSession} from 'aws-amplify/auth';
 
-type UserType = UserData | null | undefined;
+type JsonPrimitive = null | string | number | boolean;
+/** JSON array type */
+type JsonArray = JsonPrimitive[];
+
+interface JwtPayloadStandardFields {
+  exp?: number;
+  iss?: string;
+  aud?: string | string[];
+  nbf?: number;
+  iat?: number;
+  scope?: string;
+  jti?: string;
+  sub?: string;
+}
+interface JsonObject {
+  [x: string]: JsonPrimitive | JsonArray | JsonObject;
+}
+
+type JwtPayload = JwtPayloadStandardFields & JsonObject;
+
+type UserType = JwtPayload | null | undefined;
 
 type AuthContextType = {
   user: UserType;
-};
-
-type UserData = {
-  user: string | undefined;
-  userId: string | undefined;
+  userId: string;
 };
 
 const AuthContext = createContext<AuthContextType>({
   user: undefined,
+  userId: '',
 });
 
 const AuthContextProvider = ({children}: {children: ReactNode}) => {
@@ -23,11 +40,10 @@ const AuthContextProvider = ({children}: {children: ReactNode}) => {
 
   const checkUser = async () => {
     try {
-      const {username, userId} = await getCurrentUser();
-      setUser({
-        user: username,
-        userId,
-      });
+      const {tokens} = await fetchAuthSession();
+      const authUser = tokens?.idToken?.payload;
+
+      setUser(authUser);
     } catch (e) {
       setUser(null);
     }
@@ -53,7 +69,11 @@ const AuthContextProvider = ({children}: {children: ReactNode}) => {
     return () => hubListenerCancel();
   }, []);
 
-  return <AuthContext.Provider value={{user}}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{user, userId: user?.sub || ''}}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthContextProvider;
