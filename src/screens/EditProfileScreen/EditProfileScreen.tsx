@@ -1,13 +1,33 @@
-import {View, Text, StyleSheet, Image, TextInput} from 'react-native';
+import {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native';
 import {useForm, Controller, Control} from 'react-hook-form';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
-
-import user from '../../assets/data/user.json';
+import {useMutation, useQuery} from '@apollo/client';
 
 import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
-import {useState} from 'react';
-import {User} from '../../API';
+
+import {
+  GetUserQuery,
+  GetUserQueryVariables,
+  UpdateUserInput,
+  UpdateUserMutation,
+  UpdateUserMutationVariables,
+  User,
+} from '../../API';
+import {getUser, updateUser} from './queries';
+
+import {useAuthContext} from '../../contexts/AuthContext';
+
+import ApiErrorMessage from '../../components/ApiErrorMessage';
+import {useNavigation} from '@react-navigation/native';
 
 const URL_REGEX =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
@@ -65,17 +85,58 @@ const CustomInput = ({
 
 const EditProfileScreen = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<null | Asset>(null);
+  const {control, handleSubmit, setValue} = useForm<IEditableUser>();
+  const navigation = useNavigation();
 
-  const {control, handleSubmit, formState} = useForm<IEditableUser>({
-    defaultValues: {
-      name: user.name,
-      username: user.username,
-      website: user.website,
-      bio: user.bio,
-    },
-  });
-  const onSubmit = (data: IEditableUser) => {
-    console.log('submit', data);
+  const {userId, user: authUser} = useAuthContext();
+
+  const {data, loading, error} = useQuery<GetUserQuery, GetUserQueryVariables>(
+    getUser,
+    {variables: {id: userId}},
+  );
+  const user = data?.getUser;
+
+  const [doUpdateUser, {loading: updateLoading, error: updateError}] =
+    useMutation<UpdateUserMutation, UpdateUserMutationVariables>(updateUser);
+
+  useEffect(() => {
+    if (user) {
+      setValue('name', user.name);
+      setValue('username', user.username);
+      setValue('bio', user.bio);
+      setValue('website', user.website);
+    }
+  }, [user, setValue]);
+
+  const onSubmit = async (formData: IEditableUser) => {
+    const input: UpdateUserInput = {
+      id: userId,
+      ...formData,
+    };
+
+    await doUpdateUser({
+      variables: {input},
+    });
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
+  };
+
+  const uploadMedia = async (uri: string) => {
+    try {
+      // get the blob of the file from uri
+      const response = await fetch(uri);
+      const blob = await response.blob();
+
+      const uriParts = uri.split('.');
+      const extension = uriParts[uriParts.length - 1];
+
+      // upload the file (blob) to S3
+      const s3Response = await Storage.put(`${uuidv4()}.${extension}`, blob);
+      return s3Response.key;
+    } catch (e) {
+      Alert.alert('Error uploading the file');
+    }
   };
 
   const onChangePhoto = () => {
@@ -88,6 +149,19 @@ const EditProfileScreen = () => {
       },
     );
   };
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
+  if (error || updateError) {
+    return (
+      <ApiErrorMessage
+        title="Error fetching or updating the user"
+        message={error?.message || updateError?.message}
+      />
+    );
+  }
 
   return (
     <View style={styles.page}>
@@ -142,7 +216,7 @@ const EditProfileScreen = () => {
       />
 
       <Text onPress={handleSubmit(onSubmit)} style={styles.textButton}>
-        Submit
+        {updateLoading ? 'Submitting...' : 'Submit'}
       </Text>
     </View>
   );
