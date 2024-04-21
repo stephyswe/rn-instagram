@@ -49,6 +49,7 @@ const CustomInput = ({
                 {borderColor: error ? colors.error : colors.border},
               ]}
               multiline={multiline}
+              placeholderTextColor={colors.grey}
             />
             {error && (
               <Text style={{color: colors.error}}>
@@ -173,8 +174,11 @@ const styles = StyleSheet.create({
   },
   label: {
     width: 75,
+    color: colors.black,
   },
   input: {
     borderBottomWidth: 1,
+    minHeight: 50,
+    color: colors.black,
   },
 });
