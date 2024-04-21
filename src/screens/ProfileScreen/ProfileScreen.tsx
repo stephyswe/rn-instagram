@@ -48,6 +48,8 @@ const ProfileScreen = () => {
     <FeedGridView
       data={user?.Posts?.items || []}
       ListHeaderComponent={() => <ProfileHeader user={user} />}
+      refetch={refetch}
+      loading={loading}
     />
   );
 };

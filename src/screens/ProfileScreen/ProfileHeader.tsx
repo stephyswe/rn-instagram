@@ -20,7 +20,6 @@ const ProfileHeader = ({user}: IProfileHeader) => {
   const {userId} = useAuthContext();
   const navigation = useNavigation<ProfileNavigationProp>();
 
-  console.log('what is image', user.image);
   return (
     <View style={styles.root}>
       <View style={styles.headerRow}>
