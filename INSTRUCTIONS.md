@@ -952,7 +952,11 @@ Commit: ProfileScreen queries & replace types/model with API
 - name: edit user name
 - image: create new post /w image on user
 
-Commit : Retry requesting an query with APIErrorMessage or scroll down
+Commit: Scroll down to refetch user profile
+
+* copy graphql/queries - listUser to screens/UserSearchScreen/queries.ts
+
+Commit: UserSearchScreen /w listUsers query
 
 fix: error app ProfileScreen
 - check if Posts in AWS Studio has null values on image, if so delete that post
