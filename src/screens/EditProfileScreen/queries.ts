@@ -13,7 +13,7 @@ export const getUser = gql`
       nofFollowers
       nofFollowings
       image
-      
+
       createdAt
       updatedAt
     }
@@ -34,6 +34,21 @@ export const updateUser = gql`mutation UpdateUser(
     website
     image
 
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+`;
+
+
+export const deleteUser = gql`mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
+) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    
     createdAt
     updatedAt
     __typename

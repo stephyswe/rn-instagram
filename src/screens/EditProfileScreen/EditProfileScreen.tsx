@@ -6,15 +6,19 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {useForm, Controller, Control} from 'react-hook-form';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
 import {useMutation, useQuery} from '@apollo/client';
+import {deleteUser as deleteCognitoUser, signOut} from 'aws-amplify/auth';
 
 import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
 
 import {
+  DeleteUserMutation,
+  DeleteUserMutationVariables,
   GetUserQuery,
   GetUserQueryVariables,
   UpdateUserInput,
@@ -22,7 +26,7 @@ import {
   UpdateUserMutationVariables,
   User,
 } from '../../API';
-import {getUser, updateUser} from './queries';
+import {deleteUser, getUser, updateUser} from './queries';
 
 import {useAuthContext} from '../../contexts/AuthContext';
 
@@ -99,6 +103,11 @@ const EditProfileScreen = () => {
   const [doUpdateUser, {loading: updateLoading, error: updateError}] =
     useMutation<UpdateUserMutation, UpdateUserMutationVariables>(updateUser);
 
+  const [doDelete, {loading: deleteLoading, error: deleteError}] = useMutation<
+    DeleteUserMutation,
+    DeleteUserMutationVariables
+  >(deleteUser);
+
   useEffect(() => {
     if (user) {
       setValue('name', user.name);
@@ -122,20 +131,34 @@ const EditProfileScreen = () => {
     }
   };
 
-  const uploadMedia = async (uri: string) => {
+  const confirmDelete = () => {
+    Alert.alert('Are you sure?', 'Deleting your user profile is permanent', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Yes, delete',
+        style: 'destructive',
+        onPress: startDeleting,
+      },
+    ]);
+  };
+
+  const startDeleting = async () => {
+    if (!user) {
+      return;
+    }
+    // delete from DB
+    await doDelete({
+      variables: {input: {id: userId}},
+    });
+
     try {
-      // get the blob of the file from uri
-      const response = await fetch(uri);
-      const blob = await response.blob();
-
-      const uriParts = uri.split('.');
-      const extension = uriParts[uriParts.length - 1];
-
-      // upload the file (blob) to S3
-      const s3Response = await Storage.put(`${uuidv4()}.${extension}`, blob);
-      return s3Response.key;
-    } catch (e) {
-      Alert.alert('Error uploading the file');
+      await deleteCognitoUser();
+      await signOut();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -154,11 +177,11 @@ const EditProfileScreen = () => {
     return <ActivityIndicator />;
   }
 
-  if (error || updateError) {
+  if (error || updateError || deleteError) {
     return (
       <ApiErrorMessage
         title="Error fetching or updating the user"
-        message={error?.message || updateError?.message}
+        message={error?.message || updateError?.message || deleteError?.message}
       />
     );
   }
@@ -218,6 +241,10 @@ const EditProfileScreen = () => {
       <Text onPress={handleSubmit(onSubmit)} style={styles.textButton}>
         {updateLoading ? 'Submitting...' : 'Submit'}
       </Text>
+
+      <Text onPress={confirmDelete} style={styles.textButtonDanger}>
+        {deleteLoading ? 'Deleting...' : 'DELETE USER'}
+      </Text>
     </View>
   );
 };
@@ -236,6 +263,13 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: colors.primary,
+    fontSize: fonts.size.md,
+    fontWeight: fonts.weight.semi,
+
+    margin: 10,
+  },
+  textButtonDanger: {
+    color: colors.error,
     fontSize: fonts.size.md,
     fontWeight: fonts.weight.semi,
 

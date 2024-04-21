@@ -40,6 +40,7 @@ const ProfileScreen = () => {
         title="Error fetching the user"
         message={error?.message || 'User not found'}
         onRetry={() => refetch()}
+        profileUser
       />
     );
   }

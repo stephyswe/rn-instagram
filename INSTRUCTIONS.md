@@ -947,7 +947,6 @@ amplify codegen
 
 Commit: ProfileScreen queries & replace types/model with API
 
-
 * scroll down test in AWS Studio - then scroll down in user profile (refetch)
 - name: edit user name
 - image: create new post /w image on user
@@ -958,7 +957,15 @@ Commit: Scroll down to refetch user profile
 
 Commit: UserSearchScreen /w listUsers query
 
+Commit: EditProfileScreen (text color)
+Commit: EditProfileScreen - update a user with synced data
+
+Commit: EditProfileScreen - delete user
+link: https://docs.amplify.aws/react-native/build-a-backend/auth/manage-user-profile/
+* delete user test AWS Studio
+- Content - validate user is not there
+- Cognito - validate user is not there
+
 fix: error app ProfileScreen
 - check if Posts in AWS Studio has null values on image, if so delete that post
-
 ```
