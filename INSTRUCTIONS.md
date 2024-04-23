@@ -1014,4 +1014,9 @@ query MyQuery {
 Commit: Add usersByUsername & move CustomInput to single file
 
 Commit: Validate username in EditProfileScreen
+
+* remove username
+- Amplify Studio - Content - delete username from email user
+
+Commit: User Unique username (navigation screen)
 ```
