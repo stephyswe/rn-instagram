@@ -15,7 +15,6 @@ import BottomTabNavigator from './BottomTabNavigator';
 
 import EditProfileScreen from '../screens/EditProfileScreen';
 import CommentsScreen from '../screens/CommentsScreen';
-import CreatePostScreen from '../screens/CreatePostScreen';
 
 const Stack = createNativeStackNavigator<RootNavigatorParamList>(); // { Navigator, Screen }
 
@@ -78,11 +77,6 @@ const Navigation = () => {
   } else {
     stackScreens = (
       <>
-       {/*  <Stack.Screen
-          name="Create"
-          component={CreatePostScreen}
-          options={{headerShown: false}}
-        /> */}
         <Stack.Screen
           name="Home"
           component={BottomTabNavigator}

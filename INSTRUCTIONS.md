@@ -1040,4 +1040,6 @@ Commit: Add UploadStackNavigator & reroute to CreatePostSCreen
 - add input according to CreatePostInput
 
 Commit: CreatePostScreen - create a post
+
+Commit: CreatePostScreen - images and video creation
 ```
