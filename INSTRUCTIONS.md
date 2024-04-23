@@ -1012,4 +1012,6 @@ query MyQuery {
 - screens/EditProfileScreen
 
 Commit: Add usersByUsername & move CustomInput to single file
+
+Commit: Validate username in EditProfileScreen
 ```

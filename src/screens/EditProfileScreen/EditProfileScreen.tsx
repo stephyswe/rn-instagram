@@ -3,7 +3,7 @@ import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
 import {useForm} from 'react-hook-form';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
-import {useMutation, useQuery} from '@apollo/client';
+import {useLazyQuery, useMutation, useQuery} from '@apollo/client';
 import {deleteUser as deleteCognitoUser, signOut} from 'aws-amplify/auth';
 
 import styles from './styles';
@@ -16,9 +16,11 @@ import {
   UpdateUserInput,
   UpdateUserMutation,
   UpdateUserMutationVariables,
+  UsersByUsernameQuery,
+  UsersByUsernameQueryVariables,
 } from '../../API';
 
-import {deleteUser, getUser, updateUser} from './queries';
+import {deleteUser, getUser, updateUser, usersByUsername} from './queries';
 
 import {useAuthContext} from '../../contexts/AuthContext';
 
@@ -35,13 +37,18 @@ const EditProfileScreen = () => {
   const {control, handleSubmit, setValue} = useForm<IEditableUser>();
   const navigation = useNavigation();
 
-  const {userId, user: authUser} = useAuthContext();
+  const {userId} = useAuthContext();
 
   const {data, loading, error} = useQuery<GetUserQuery, GetUserQueryVariables>(
     getUser,
     {variables: {id: userId}},
   );
   const user = data?.getUser;
+
+  const [getUsersByUsername] = useLazyQuery<
+    UsersByUsernameQuery,
+    UsersByUsernameQueryVariables
+  >(usersByUsername);
 
   const [doUpdateUser, {loading: updateLoading, error: updateError}] =
     useMutation<UpdateUserMutation, UpdateUserMutationVariables>(updateUser);
@@ -116,6 +123,28 @@ const EditProfileScreen = () => {
     );
   };
 
+  const validateUsername = async (username: string) => {
+    // query the database based on the usersByUsername
+
+    try {
+      const response = await getUsersByUsername({variables: {username}});
+      if (response.error) {
+        Alert.alert('Failed to fetch username');
+        return 'Failed to fetch username';
+      }
+
+      const users = response.data?.usersByUsername?.items;
+      if (users && users.length > 0 && users?.[0]?.id !== userId) {
+        return 'Username is already taken';
+      }
+    } catch (e) {
+      Alert.alert('Failed to fetch username');
+    }
+    // if there are any users with this username, then return the error
+
+    return true;
+  };
+
   if (loading) {
     return <ActivityIndicator />;
   }
@@ -154,6 +183,7 @@ const EditProfileScreen = () => {
             value: 3,
             message: 'Username should be more then 3 characters',
           },
+          validate: validateUsername,
         }}
         label="Username"
       />
