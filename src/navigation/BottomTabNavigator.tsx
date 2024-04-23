@@ -9,8 +9,9 @@ import colors from '../theme/colors';
 import HomeStackNavigator from './HomeStackNavigator';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import SearchTabNavigator from './SearchTabNavigor';
+import UploadStackNavigator from './UploadStackNavigator';
 
-import CameraScreen from '../screens/CameraScreen/CameraScreen';
+import CameraScreen from '../screens/CameraScreen';
 
 import {BottomTabNavigatorParamList} from '../types/navigation';
 
@@ -45,7 +46,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Upload"
-        component={CameraScreen}
+        component={UploadStackNavigator}
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (

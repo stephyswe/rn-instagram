@@ -1030,4 +1030,10 @@ app: scroll down in default screen
 
 Commit: HomeScreen refetch posts on scroll down
 
+Commit: rename PostUploadScreen to CameraScreen
+
+Commit: fix: add index.ts to all screens
+
+Commit: Add UploadStackNavigator & reroute to CreatePostSCreen
+
 ```

@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {
   Camera,
   CameraPictureOptions,
@@ -12,6 +13,7 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import colors from '../../theme/colors';
+import {CameraNavigationProp} from '../../types/navigation';
 
 // TODO: getSupportedRatiosAsync() in ratio - <Camera style={styles.camera} type={cameraType} ratio="4:3" />
 
@@ -37,6 +39,7 @@ const CameraScreen = () => {
   const [isRecording, setIsRecording] = useState(false);
 
   const camera = useRef<Camera>(null);
+  const navigation = useNavigation<CameraNavigationProp>();
 
   useEffect(() => {
     const getPermission = async () => {
@@ -119,6 +122,12 @@ const CameraScreen = () => {
     return <Text>No access to the camera</Text>;
   }
 
+  const navigateToCreateScreen = () => {
+    navigation.navigate('Create', {
+      image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg',
+    });
+  };
+
   return (
     <View style={styles.page}>
       <Camera
@@ -162,6 +171,14 @@ const CameraScreen = () => {
         <Pressable onPress={flipCamera}>
           <MaterialIcons
             name="flip-camera-ios"
+            size={30}
+            color={colors.white}
+          />
+        </Pressable>
+
+        <Pressable onPress={navigateToCreateScreen}>
+          <MaterialIcons
+            name="flip-forward-ios"
             size={30}
             color={colors.white}
           />
