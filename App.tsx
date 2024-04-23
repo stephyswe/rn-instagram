@@ -8,17 +8,20 @@ import amplifyconfig from './src/amplifyconfiguration.json';
 import Navigation from './src/navigation';
 
 import AuthContextProvider from './src/contexts/AuthContext';
+import {MenuProvider} from 'react-native-popup-menu';
 
 Amplify.configure(amplifyconfig);
 
 const App = () => {
   return (
     <SafeAreaProvider>
-      <AuthContextProvider>
-        <Client>
-          <Navigation />
-        </Client>
-      </AuthContextProvider>
+      <MenuProvider>
+        <AuthContextProvider>
+          <Client>
+            <Navigation />
+          </Client>
+        </AuthContextProvider>
+      </MenuProvider>
     </SafeAreaProvider>
   );
 };

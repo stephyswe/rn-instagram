@@ -1042,4 +1042,8 @@ Commit: Add UploadStackNavigator & reroute to CreatePostSCreen
 Commit: CreatePostScreen - create a post
 
 Commit: CreatePostScreen - images and video creation
+
+npm i react-native-popup-menu@^0.15.12 --legacy-peer-deps
+
+Commit: FeedPost - add PostMenu skeleton
 ```

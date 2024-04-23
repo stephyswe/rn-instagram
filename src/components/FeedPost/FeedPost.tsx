@@ -2,7 +2,6 @@ import {useState} from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -18,6 +17,7 @@ import DoublePressable from '../DoublePressable';
 import VideoPlayer from '../VideoPlayer';
 import {Post} from '../../API';
 import {DEFAULT_USER_IMAGE} from '../../config';
+import PostMenu from './PostMenu';
 
 interface IFeedPost {
   post: Post;
@@ -78,6 +78,7 @@ const FeedPost = (props: IFeedPost) => {
   return (
     <View style={styles.post}>
       {/* Header */}
+
       <View style={styles.header}>
         <Image
           source={{
@@ -88,11 +89,7 @@ const FeedPost = (props: IFeedPost) => {
         <Text onPress={navigateToUser} style={styles.userName}>
           {post.User?.username}
         </Text>
-        <Entypo
-          name="dots-three-horizontal"
-          size={16}
-          style={styles.threeDots}
-        />
+        <PostMenu />
       </View>
 
       {/* Content */}
