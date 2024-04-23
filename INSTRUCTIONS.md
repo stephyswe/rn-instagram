@@ -2,6 +2,19 @@
 
 ### 1. Default
 
+Speed up: https://reactnative.dev/docs/build-speed
+
+Error handling:
+```
+if Starting a Gradle Daemon, 1 busy and 1 incompatible Daemons could not be reused, use --status for details
+
+run
+adb kill-server
+adb start-server
+.
+./gradlew clean in the android director
+```
+
 debug react native - https://deadsimplechat.com/blog/react-native-debugger/#step-1-setting-up-the-react-native-cli-app
 ```
 ex - react native tools
@@ -968,4 +981,35 @@ link: https://docs.amplify.aws/react-native/build-a-backend/auth/manage-user-pro
 
 fix: error app ProfileScreen
 - check if Posts in AWS Studio has null values on image, if so delete that post
+```
+
+### 43_7.8 User Unique username
+
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html
+optimze queries |(faster)
+
+```
+- edit schema.graphql - User - username index
+amplify push -yes
+amplify console
+Which site do you want to open?: AWS console
+(aws console)
+- API 
+
+...
+amplify console
+Which site do you want to open?: Amplify Studio
+- Content - User - copy a username
+
+...
+(AWS AppSync) - instagram_staging
+- Queries
+query MyQuery {
+  usersByUsername(username: <username){items{id username}}
+}
+
+(app)
+- screens/EditProfileScreen
+
+Commit: Add usersByUsername & move CustomInput to single file
 ```

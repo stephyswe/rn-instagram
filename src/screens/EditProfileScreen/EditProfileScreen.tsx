@@ -1,20 +1,12 @@
 import {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TextInput,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
-import {useForm, Controller, Control} from 'react-hook-form';
+import {View, Text, Image, ActivityIndicator, Alert} from 'react-native';
+import {useForm} from 'react-hook-form';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
+import {useNavigation} from '@react-navigation/native';
 import {useMutation, useQuery} from '@apollo/client';
 import {deleteUser as deleteCognitoUser, signOut} from 'aws-amplify/auth';
 
-import colors from '../../theme/colors';
-import fonts from '../../theme/fonts';
+import styles from './styles';
 
 import {
   DeleteUserMutation,
@@ -24,68 +16,19 @@ import {
   UpdateUserInput,
   UpdateUserMutation,
   UpdateUserMutationVariables,
-  User,
 } from '../../API';
+
 import {deleteUser, getUser, updateUser} from './queries';
 
 import {useAuthContext} from '../../contexts/AuthContext';
 
 import ApiErrorMessage from '../../components/ApiErrorMessage';
-import {useNavigation} from '@react-navigation/native';
+import CustomInput, {IEditableUser} from './CustomInput';
+
+import {DEFAULT_USER_IMAGE} from '../../config';
 
 const URL_REGEX =
   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
-
-type IEditableUserField = 'name' | 'username' | 'website' | 'bio';
-type IEditableUser = Pick<User, IEditableUserField>;
-
-interface ICustomInput {
-  control: Control<IEditableUser, object>;
-  label: string;
-  name: IEditableUserField;
-  multiline?: boolean;
-  rules?: object;
-}
-
-const CustomInput = ({
-  control,
-  name,
-  label,
-  multiline = false,
-  rules = {},
-}: ICustomInput) => (
-  <Controller
-    control={control}
-    name={name}
-    rules={rules}
-    render={({field: {onChange, value, onBlur}, fieldState: {error}}) => {
-      return (
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>{label}</Text>
-          <View style={{flex: 1}}>
-            <TextInput
-              value={value || ''}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              placeholder={label}
-              style={[
-                styles.input,
-                {borderColor: error ? colors.error : colors.border},
-              ]}
-              multiline={multiline}
-              placeholderTextColor={colors.grey}
-            />
-            {error && (
-              <Text style={{color: colors.error}}>
-                {error.message || 'Error'}
-              </Text>
-            )}
-          </View>
-        </View>
-      );
-    }}
-  />
-);
 
 const EditProfileScreen = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<null | Asset>(null);
@@ -189,7 +132,7 @@ const EditProfileScreen = () => {
   return (
     <View style={styles.page}>
       <Image
-        source={{uri: selectedPhoto?.uri || user?.image}}
+        source={{uri: selectedPhoto?.uri || user?.image || DEFAULT_USER_IMAGE}}
         style={styles.avatar}
       />
       <Text onPress={onChangePhoto} style={styles.textButton}>
@@ -250,43 +193,3 @@ const EditProfileScreen = () => {
 };
 
 export default EditProfileScreen;
-
-const styles = StyleSheet.create({
-  page: {
-    alignItems: 'center',
-    padding: 10,
-  },
-  avatar: {
-    width: '30%',
-    aspectRatio: 1,
-    borderRadius: 100,
-  },
-  textButton: {
-    color: colors.primary,
-    fontSize: fonts.size.md,
-    fontWeight: fonts.weight.semi,
-
-    margin: 10,
-  },
-  textButtonDanger: {
-    color: colors.error,
-    fontSize: fonts.size.md,
-    fontWeight: fonts.weight.semi,
-
-    margin: 10,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'stretch',
-  },
-  label: {
-    width: 75,
-    color: colors.black,
-  },
-  input: {
-    borderBottomWidth: 1,
-    minHeight: 50,
-    color: colors.black,
-  },
-});
