@@ -1,18 +1,20 @@
 import {ActivityIndicator, Text, View} from 'react-native';
 import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-import BottomTabNavigator from './BottomTabNavigator';
-
-import CommentsScreen from '../screens/CommentsScreen/CommentsScreen';
+import {useQuery} from '@apollo/client';
 
 import {RootNavigatorParamList} from '../types/navigation';
-import AuthStackNavigator from './AuthStackNavigator';
-import {useAuthContext} from '../contexts/AuthContext';
+
 import {getUser} from './queries';
-import {useQuery} from '@apollo/client';
 import {GetUserQuery, GetUserQueryVariables} from '../API';
-import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen';
+
+import {useAuthContext} from '../contexts/AuthContext';
+
+import AuthStackNavigator from './AuthStackNavigator';
+import BottomTabNavigator from './BottomTabNavigator';
+
+import EditProfileScreen from '../screens/EditProfileScreen';
+import CommentsScreen from '../screens/CommentsScreen';
 
 const Stack = createNativeStackNavigator<RootNavigatorParamList>(); // { Navigator, Screen }
 

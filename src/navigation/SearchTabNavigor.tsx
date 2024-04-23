@@ -3,8 +3,8 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 
 import colors from '../theme/colors';
 
-import CommentsScreen from '../screens/CommentsScreen/CommentsScreen';
-import UserSearchScreen from '../screens/UserSearchScreen/UserSearchScreen';
+import CommentsScreen from '../screens/CommentsScreen';
+import UserSearchScreen from '../screens/UserSearchScreen';
 
 import {SearchTabNavigatorParamList} from '../types/navigation';
 
