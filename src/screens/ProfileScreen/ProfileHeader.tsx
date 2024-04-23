@@ -11,6 +11,7 @@ import {ProfileNavigationProp} from '../../types/navigation';
 import {User} from '../../API';
 import {DEFAULT_USER_IMAGE} from '../../config';
 import {useAuthContext} from '../../contexts/AuthContext';
+import {useEffect} from 'react';
 
 interface IProfileHeader {
   user: User;
@@ -19,6 +20,10 @@ interface IProfileHeader {
 const ProfileHeader = ({user}: IProfileHeader) => {
   const {userId} = useAuthContext();
   const navigation = useNavigation<ProfileNavigationProp>();
+
+  useEffect(() => {
+    navigation.setOptions({title: user?.username || 'Profile'});
+  }, [user?.username]);
 
   return (
     <View style={styles.root}>
