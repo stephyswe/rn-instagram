@@ -178,7 +178,7 @@ const CameraScreen = () => {
 
         <Pressable onPress={navigateToCreateScreen}>
           <MaterialIcons
-            name="flip-forward-ios"
+            name="add-to-photos"
             size={30}
             color={colors.white}
           />

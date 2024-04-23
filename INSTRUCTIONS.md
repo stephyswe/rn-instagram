@@ -1036,4 +1036,8 @@ Commit: fix: add index.ts to all screens
 
 Commit: Add UploadStackNavigator & reroute to CreatePostSCreen
 
+- add mutation createPost to CreatePostScreen
+- add input according to CreatePostInput
+
+Commit: CreatePostScreen - create a post
 ```
