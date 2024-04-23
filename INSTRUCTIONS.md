@@ -1020,3 +1020,14 @@ Commit: Validate username in EditProfileScreen
 
 Commit: User Unique username (navigation screen)
 ```
+
+### 44_7.9 Posts CRUD
+
+```
+* validate HomeScreen refetch
+- Amplify Studio - Content - Edit Post - description
+app: scroll down in default screen
+
+Commit: HomeScreen refetch posts on scroll down
+
+```
