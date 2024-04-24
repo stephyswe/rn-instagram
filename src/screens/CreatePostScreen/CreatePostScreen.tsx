@@ -30,17 +30,7 @@ const CreatePostScreen = () => {
   >(createPost);
 
   const route = useRoute<CreateRouteProp>();
-  /* const image =
-    'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg'; */
-  const image = null;
-  //const images = null;
-  const images = [
-    'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/2.jpg',
-    'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg',
-  ];
-  const video = null;
-
-  // TODO: const {image} = route.params;
+  const {image, images, video} = route.params;
 
   let content;
   if (image) {
@@ -60,6 +50,11 @@ const CreatePostScreen = () => {
   }
 
   const submit = async () => {
+    if (isSubmitting) {
+      return;
+    }
+    setIsSubmitting(true);
+
     try {
       const response = await doCreatePost({
         variables: {
@@ -75,7 +70,6 @@ const CreatePostScreen = () => {
         },
       });
 
-      console.log(response);
       navigation.popToTop();
       navigation.navigate('HomeStack');
     } catch (e) {
