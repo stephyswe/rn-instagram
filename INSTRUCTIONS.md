@@ -1051,4 +1051,7 @@ Commit: FeedPost - add PostMenu skeleton
 
 Commit: FeedPost - use PostMenu to delete a post
 
+- copy CreatePostScreen to UpdatePostScreen
+
+Commit: UpdatePostScreen - description from getPost
 ```
