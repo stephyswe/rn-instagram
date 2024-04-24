@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useMutation} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
@@ -18,8 +18,14 @@ import DoublePressable from '../DoublePressable';
 import VideoPlayer from '../VideoPlayer';
 import PostMenu from './PostMenu';
 
-import {createLike} from './queries';
-import {CreateLikeMutation, CreateLikeMutationVariables, Post} from '../../API';
+import {createLike, likesForPostByUser} from './queries';
+import {
+  CreateLikeMutation,
+  CreateLikeMutationVariables,
+  LikesForPostByUserQuery,
+  LikesForPostByUserQueryVariables,
+  Post,
+} from '../../API';
 
 import {DEFAULT_USER_IMAGE} from '../../config';
 
@@ -36,15 +42,28 @@ const FeedPost = (props: IFeedPost) => {
   const navigation = useNavigation<FeedNavigationProp>();
   const {userId} = useAuthContext();
 
-  const [isLiked, setIsLiked] = useState(false);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+
+  const {data: usersLikeData} = useQuery<
+    LikesForPostByUserQuery,
+    LikesForPostByUserQueryVariables
+  >(likesForPostByUser, {
+    variables: {
+      postID: post.id,
+      userID: {eq: userId},
+    },
+  });
 
   const [doCreateLike] = useMutation<
     CreateLikeMutation,
     CreateLikeMutationVariables
   >(createLike, {
     variables: {input: {userID: userId, postID: post.id}},
+    refetchQueries: ['LikesForPostByUser'],
   });
+
+  console.log(usersLikeData);
+  const userLike = usersLikeData?.likesForPostByUser?.items?.[0];
 
   const navigateToUser = () => {
     // navigate
@@ -116,10 +135,10 @@ const FeedPost = (props: IFeedPost) => {
         <View style={styles.iconContainer}>
           <Pressable onPress={toggleLike}>
             <AntDesign
-              name={isLiked ? 'heart' : 'hearto'}
+              name={userLike ? 'heart' : 'hearto'}
               size={24}
               style={styles.icon}
-              color={isLiked ? colors.accent : colors.black}
+              color={userLike ? colors.accent : colors.black}
             />
           </Pressable>
           <Ionicons

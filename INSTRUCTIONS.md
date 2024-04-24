@@ -1077,6 +1077,10 @@ query MyQuery {
 
 Commit: FeedPost - createLike initialize
 
+- upd schema.graphql
+amplify push -yes
+- check schema.graphql for LikesForPostByUser in queries
 
+Commit: FeedPost - custom likesForPostByUser query
 
 ```
