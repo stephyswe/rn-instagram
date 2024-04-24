@@ -12,3 +12,19 @@ export const getPost = gql`query GetPost($id: ID!) {
   }
 }
 `
+
+export const updatePost = gql`
+  mutation UpdatePost(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    updatePost(input: $input, condition: $condition) {
+      id
+      description
+
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;

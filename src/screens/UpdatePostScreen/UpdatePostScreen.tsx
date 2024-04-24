@@ -1,20 +1,30 @@
 import {useEffect, useState} from 'react';
 import {View, TextInput, StyleSheet, ActivityIndicator} from 'react-native';
-import {useRoute} from '@react-navigation/native';
-import {useQuery} from '@apollo/client';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {useMutation, useQuery} from '@apollo/client';
 
 import colors from '../../theme/colors';
 
-import {UpdatePostRouteProp} from '../../types/navigation';
+import {
+  CreateNavigationProp,
+  UpdatePostRouteProp,
+} from '../../types/navigation';
 
-import {getPost} from './queries';
+import {getPost, updatePost} from './queries';
 
-import {GetPostQuery, GetPostQueryVariables} from '../../API';
+import {
+  GetPostQuery,
+  GetPostQueryVariables,
+  UpdatePostMutation,
+  UpdatePostMutationVariables,
+} from '../../API';
 
 import Button from '../../components/Button';
 import ApiErrorMessage from '../../components/ApiErrorMessage';
 
 const UpdatePostScreen = () => {
+  const navigation = useNavigation<CreateNavigationProp>();
+
   const [description, setDescription] = useState('');
 
   const route = useRoute<UpdatePostRouteProp>();
@@ -26,23 +36,41 @@ const UpdatePostScreen = () => {
 
   const post = data?.getPost;
 
+  const [doUpdatePost, {error: updateError, data: updateData}] = useMutation<
+    UpdatePostMutation,
+    UpdatePostMutationVariables
+  >(updatePost);
+
   useEffect(() => {
     if (post) {
       setDescription(post.description || '');
     }
   }, [post]);
 
-  const submit = async () => {};
+  useEffect(() => {
+    if (updateData) {
+      navigation.goBack();
+    }
+  }, [updateData, navigation]);
+
+  const submit = async () => {
+    if (!post) {
+      return;
+    }
+    doUpdatePost({
+      variables: {input: {id: post.id, description}},
+    });
+  };
 
   if (loading) {
     return <ActivityIndicator />;
   }
 
-  if (error) {
+  if (error || updateError) {
     return (
       <ApiErrorMessage
         title="Failed to fetch the post"
-        message={error?.message}
+        message={error?.message || updateError?.message}
       />
     );
   }
@@ -68,11 +96,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
-  image: {
-    width: 200,
-    height: 200,
-    aspectRatio: 1,
-  },
   input: {
     marginVertical: 10,
     alignSelf: 'stretch',
@@ -80,26 +103,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     color: colors.black,
-  },
-  content: {
-    width: '100%',
-    aspectRatio: 1,
-  },
-  progressContainer: {
-    backgroundColor: colors.lightgrey,
-    width: '100%',
-    height: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 25,
-    marginVertical: 10,
-  },
-  progress: {
-    backgroundColor: colors.primary,
-    position: 'absolute',
-    height: '100%',
-    alignSelf: 'flex-start',
-    borderRadius: 25,
   },
 });
 
