@@ -1,4 +1,5 @@
 import {Alert, StyleSheet, Text} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {
   renderers,
   Menu,
@@ -6,10 +7,62 @@ import {
   MenuOptions,
   MenuOption,
 } from 'react-native-popup-menu';
+import {useMutation} from '@apollo/client';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 
-const PostMenu = () => {
+import {deletePost} from './queries';
+import {
+  DeleteCommentMutationVariables,
+  DeletePostMutation,
+  Post,
+} from '../../API';
+
+import {useAuthContext} from '../../contexts/AuthContext';
+
+import {FeedNavigationProp} from '../../types/navigation';
+
+interface IPostMenu {
+  post: Post;
+}
+
+const PostMenu = ({post}: IPostMenu) => {
+  const {userId} = useAuthContext();
+  const navigation = useNavigation<FeedNavigationProp>();
+
+  const [doDeletePost] = useMutation<
+    DeletePostMutation,
+    DeleteCommentMutationVariables
+  >(deletePost, {variables: {input: {id: post.id}}});
+
+  const isMyPost = userId === post.userID;
+
+  const startDeletingPost = async () => {
+    try {
+      await doDeletePost();
+    } catch (e) {
+      Alert.alert('Failed to delete post', (e as Error).message);
+    }
+  };
+
+  const onDeleteOptionPressed = () => {
+    Alert.alert('Are you sure?', 'Deleting a post is permanent', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Delete post',
+        style: 'destructive',
+        onPress: startDeletingPost,
+      },
+    ]);
+  };
+
+  const onEditOptionPressed = () => {
+    navigation.navigate('UpdatePost', {id: post.id});
+  };
+
   return (
     <Menu renderer={renderers.SlideInMenu} style={styles.threeDots}>
       <MenuTrigger>
@@ -20,14 +73,16 @@ const PostMenu = () => {
         <MenuOption onSelect={() => Alert.alert('Reporting')}>
           <Text style={styles.optionText}>Report</Text>
         </MenuOption>
-        <>
-          <MenuOption onSelect={() => {}}>
-            <Text style={[styles.optionText, {color: 'red'}]}>Delete</Text>
-          </MenuOption>
-          <MenuOption onSelect={() => {}}>
-            <Text style={styles.optionText}>Edit</Text>
-          </MenuOption>
-        </>
+        {isMyPost && (
+          <>
+            <MenuOption onSelect={onDeleteOptionPressed}>
+              <Text style={[styles.optionText, {color: 'red'}]}>Delete</Text>
+            </MenuOption>
+            <MenuOption onSelect={onEditOptionPressed}>
+              <Text style={styles.optionText}>Edit</Text>
+            </MenuOption>
+          </>
+        )}
       </MenuOptions>
     </Menu>
   );

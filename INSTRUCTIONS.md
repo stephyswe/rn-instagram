@@ -1046,4 +1046,9 @@ Commit: CreatePostScreen - images and video creation
 npm i react-native-popup-menu@^0.15.12 --legacy-peer-deps
 
 Commit: FeedPost - add PostMenu skeleton
+
+- mutation - deletePost
+
+Commit: FeedPost - use PostMenu to delete a post
+
 ```
