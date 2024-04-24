@@ -13,3 +13,21 @@ export const deletePost = gql`mutation DeletePost(
     }
   }
   `
+
+
+export const createLike = gql`mutation CreateLike(
+  $input: CreateLikeInput!
+  $condition: ModelLikeConditionInput
+) {
+  createLike(input: $input, condition: $condition) {
+    id
+
+    userID
+    postID
+    
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+`

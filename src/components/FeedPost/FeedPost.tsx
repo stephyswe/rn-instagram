@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useMutation} from '@apollo/client';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
@@ -15,9 +16,14 @@ import Comment from '../Comment';
 import Carousel from '../Carousel';
 import DoublePressable from '../DoublePressable';
 import VideoPlayer from '../VideoPlayer';
-import {Post} from '../../API';
-import {DEFAULT_USER_IMAGE} from '../../config';
 import PostMenu from './PostMenu';
+
+import {createLike} from './queries';
+import {CreateLikeMutation, CreateLikeMutationVariables, Post} from '../../API';
+
+import {DEFAULT_USER_IMAGE} from '../../config';
+
+import {useAuthContext} from '../../contexts/AuthContext';
 
 interface IFeedPost {
   post: Post;
@@ -26,9 +32,19 @@ interface IFeedPost {
 
 const FeedPost = (props: IFeedPost) => {
   const {post, isVisible = false} = props;
-  const [isLiked, setIsLiked] = useState(false);
 
   const navigation = useNavigation<FeedNavigationProp>();
+  const {userId} = useAuthContext();
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+
+  const [doCreateLike] = useMutation<
+    CreateLikeMutation,
+    CreateLikeMutationVariables
+  >(createLike, {
+    variables: {input: {userID: userId, postID: post.id}},
+  });
 
   const navigateToUser = () => {
     // navigate
@@ -43,14 +59,14 @@ const FeedPost = (props: IFeedPost) => {
     navigation.navigate('Comments', {postId: post.id});
   };
 
-  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-
   const toggleDescriptionExpanded = () => {
     setIsDescriptionExpanded(v => !v);
   };
 
-  const toggleLike = () => {
-    setIsLiked(v => !v);
+  const toggleLike = async () => {
+    console.warn('toogleLike');
+    const response = await doCreateLike();
+    console.log('createLike', response);
   };
 
   let content = null;

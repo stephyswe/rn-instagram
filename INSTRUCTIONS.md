@@ -1055,3 +1055,28 @@ Commit: FeedPost - use PostMenu to delete a post
 
 Commit: UpdatePostScreen - description from getPost
 ```
+
+### 45_7.10 Likes CRUD
+
+```
+- mutation - createLike
+- run doCreateLike
+- AWS AppSync - run listLikes query
+query MyQuery {
+  listLikes {
+    items {
+      id
+      postID
+      userID
+      User {
+        name
+      }
+    }
+  }
+}
+
+Commit: FeedPost - createLike initialize
+
+
+
+```
