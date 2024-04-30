@@ -69,7 +69,7 @@ const FeedPost = (props: IFeedPost) => {
     DeleteLikeMutationVariables
   >(deleteLike);
 
-  const userLike = usersLikeData?.LikesForPostByUser?.items?.[0];
+  const userLike = usersLikeData?.likesForPostByUser?.items?.[0];
   //console.log('userLike', userLike);
 
   const navigateToUser = () => {
@@ -83,6 +83,10 @@ const FeedPost = (props: IFeedPost) => {
 
   const navigateToComments = () => {
     navigation.navigate('Comments', {postId: post.id});
+  };
+
+  const navigateToLikes = () => {
+    navigation.navigate('PostLikes', {id: post.id});
   };
 
   const toggleDescriptionExpanded = () => {
@@ -186,7 +190,7 @@ const FeedPost = (props: IFeedPost) => {
         </View>
 
         {/* Likes */}
-        <Text style={styles.text}>
+        <Text style={styles.text} onPress={navigateToLikes}>
           Liked by <Text style={styles.bold}>lgrine</Text> and{' '}
           <Text style={styles.bold}>{post.nofLikes} others</Text>
         </Text>

@@ -6,6 +6,7 @@ import logo from '../assets/images/logo.png';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import UpdatePostScreen from '../screens/UpdatePostScreen';
+import PostLikesScreen from '../screens/PostLikesScreen';
 
 import {HomeStackNavigatorParamList} from '../types/navigation';
 
@@ -28,6 +29,11 @@ const HomeStackNavigator = () => {
         name="UpdatePost"
         component={UpdatePostScreen}
         options={{title: 'Update Post'}}
+      />
+      <Stack.Screen
+        name="PostLikes"
+        component={PostLikesScreen}
+        options={{title: 'Post Likes'}}
       />
     </Stack.Navigator>
   );
