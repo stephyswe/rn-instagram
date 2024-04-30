@@ -4,7 +4,7 @@ type Like @model @auth(rules: [{allow: public}]) {
   postID: ID! @index(name: "byPost", queryField: "likesForPostByUser", sortKeyFields: ["userID"])
 
   User: User @belongsTo(fields: ["userID"])
-  Post: User @belongsTo(fields: ["postID"])
+  Post: Post @belongsTo(fields: ["postID"])
 }
 
 type Comment @model @auth(rules: [{allow: public}]) {
