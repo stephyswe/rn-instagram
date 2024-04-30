@@ -1147,8 +1147,13 @@ mutation myMutation {
 
 ->
 
-### 45_7.10 Likes CRUD
+### 45_7.10 Likes CRUD (contin.)
 
 ```
 Commit: PostLikesScreen - initial
+Commit: fix: schema.graphql - type Like - Post as Post
+
+- add one like from "main user"
+- Register new user "Support" - add second like
+
 ```

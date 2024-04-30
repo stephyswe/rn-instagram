@@ -18,7 +18,12 @@ import DoublePressable from '../DoublePressable';
 import VideoPlayer from '../VideoPlayer';
 import PostMenu from './PostMenu';
 
-import {createLike, deleteLike, likesForPostByUser} from './queries';
+import {
+  createLike,
+  deleteLike,
+  likesForPostByUser,
+  updatePost,
+} from './queries';
 import {
   CreateLikeMutation,
   CreateLikeMutationVariables,
@@ -27,6 +32,8 @@ import {
   LikesForPostByUserQuery,
   LikesForPostByUserQueryVariables,
   Post,
+  UpdatePostMutation,
+  UpdatePostMutationVariables,
 } from '../../API';
 
 import {DEFAULT_USER_IMAGE} from '../../config';
@@ -41,6 +48,9 @@ interface IFeedPost {
 const FeedPost = (props: IFeedPost) => {
   const {post, isVisible = false} = props;
 
+  const propPostLike = post.Likes?.items;
+  console.log('prop', propPostLike);
+
   const navigation = useNavigation<FeedNavigationProp>();
   const {userId} = useAuthContext();
 
@@ -54,23 +64,34 @@ const FeedPost = (props: IFeedPost) => {
     refetchQueries: ['LikesForPostByUser'],
   });
 
-  const {data: usersLikeData} = useQuery<
+  const {data: dataAllLikes} = useQuery<
     LikesForPostByUserQuery,
     LikesForPostByUserQueryVariables
-  >(likesForPostByUser, {
-    variables: {
-      postID: post.id,
-      userID: {eq: userId},
-    },
-  });
+  >(likesForPostByUser, {variables: {postID: post.id}});
 
   const [doDeleteLike] = useMutation<
     DeleteLikeMutation,
     DeleteLikeMutationVariables
   >(deleteLike);
 
-  const userLike = usersLikeData?.likesForPostByUser?.items?.[0];
-  //console.log('userLike', userLike);
+  const [doUpdatePost] = useMutation<
+    UpdatePostMutation,
+    UpdatePostMutationVariables
+  >(updatePost);
+
+  const postLikes = dataAllLikes?.likesForPostByUser?.items || [];
+  const userLike = postLikes?.filter(item => item?.userID === userId)[0];
+
+  const incrementNofLikes = (amount: 1 | -1) => {
+    doUpdatePost({
+      variables: {
+        input: {
+          id: post.id,
+          nofLikes: post.nofLikes + amount,
+        },
+      },
+    });
+  };
 
   const navigateToUser = () => {
     // navigate
@@ -95,22 +116,11 @@ const FeedPost = (props: IFeedPost) => {
 
   const toggleLike = () => {
     if (userLike) {
-      const userId = userLike?.id;
-      console.log('delete like', userId);
-      doDeleteLike({
-        variables: {
-          input: {id: userLike.id},
-        },
-        onError(error, clientOptions) {
-          //console.log('error 1', error);
-        },
-        onCompleted(data, clientOptions) {
-          //console.log('delete comlpete', data, clientOptions);
-        },
-      });
+      doDeleteLike({variables: {input: {id: userLike.id}}});
+      incrementNofLikes(-1);
     } else {
       doCreateLike();
-      console.log('create like');
+      incrementNofLikes(1);
     }
   };
 
@@ -147,7 +157,7 @@ const FeedPost = (props: IFeedPost) => {
           }}
           style={styles.userAvatar}
         />
-        
+
         <Text onPress={navigateToUser} style={styles.userName}>
           {post.User?.username}
         </Text>
@@ -190,10 +200,22 @@ const FeedPost = (props: IFeedPost) => {
         </View>
 
         {/* Likes */}
-        <Text style={styles.text} onPress={navigateToLikes}>
-          Liked by <Text style={styles.bold}>lgrine</Text> and{' '}
-          <Text style={styles.bold}>{post.nofLikes} others</Text>
-        </Text>
+        {postLikes.length === 0 ? (
+          <Text>Be the first to like the post</Text>
+        ) : (
+          <Text style={styles.text} onPress={navigateToLikes}>
+            Liked by{' '}
+            <Text style={styles.bold}>
+              {post.Likes?.items[0]?.User?.username}
+            </Text>
+            {postLikes.length > 1 && (
+              <>
+                {' '}
+                and <Text style={styles.bold}>{post.nofLikes - 1} others</Text>
+              </>
+            )}
+          </Text>
+        )}
 
         {/* Post description */}
         <Text style={styles.text} numberOfLines={isDescriptionExpanded ? 0 : 3}>
