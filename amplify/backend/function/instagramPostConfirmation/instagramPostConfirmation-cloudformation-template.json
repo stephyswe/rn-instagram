@@ -44,17 +44,17 @@
     "s3Key": {
       "Type": "String"
     },
-    "apiinstagramGraphQLAPIIdOutput": {
+    "apiInstagramGraphQLAPIIdOutput": {
       "Type": "String",
-      "Default": "apiinstagramGraphQLAPIIdOutput"
+      "Default": "apiInstagramGraphQLAPIIdOutput"
     },
-    "apiinstagramGraphQLAPIEndpointOutput": {
+    "apiInstagramGraphQLAPIEndpointOutput": {
       "Type": "String",
-      "Default": "apiinstagramGraphQLAPIEndpointOutput"
+      "Default": "apiInstagramGraphQLAPIEndpointOutput"
     },
-    "apiinstagramGraphQLAPIKeyOutput": {
+    "apiInstagramGraphQLAPIKeyOutput": {
       "Type": "String",
-      "Default": "apiinstagramGraphQLAPIKeyOutput"
+      "Default": "apiInstagramGraphQLAPIKeyOutput"
     }
   },
   "Conditions": {
@@ -79,12 +79,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "instagramPostConfirmation",
+            "InstagramPostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "instagramPostConfirmation",
+                  "InstagramPostConfirmation",
                   "-",
                   {
                     "Ref": "env"
@@ -109,13 +109,13 @@
               "Ref": "GROUP"
             },
             "API_INSTAGRAM_GRAPHQLAPIIDOUTPUT": {
-              "Ref": "apiinstagramGraphQLAPIIdOutput"
+              "Ref": "apiInstagramGraphQLAPIIdOutput"
             },
             "API_INSTAGRAM_GRAPHQLAPIENDPOINTOUTPUT": {
-              "Ref": "apiinstagramGraphQLAPIEndpointOutput"
+              "Ref": "apiInstagramGraphQLAPIEndpointOutput"
             },
             "API_INSTAGRAM_GRAPHQLAPIKEYOUTPUT": {
-              "Ref": "apiinstagramGraphQLAPIKeyOutput"
+              "Ref": "apiInstagramGraphQLAPIKeyOutput"
             }
           }
         },
@@ -143,12 +143,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "instagramPostConfirmation",
+            "InstagramPostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "instagramPostConfirmation",
+                  "InstagramPostConfirmation",
                   "-",
                   {
                     "Ref": "env"
@@ -254,7 +254,7 @@
                       },
                       ":apis/",
                       {
-                        "Ref": "apiinstagramGraphQLAPIIdOutput"
+                        "Ref": "apiInstagramGraphQLAPIIdOutput"
                       },
                       "/types/Query/*"
                     ]
@@ -274,7 +274,7 @@
                       },
                       ":apis/",
                       {
-                        "Ref": "apiinstagramGraphQLAPIIdOutput"
+                        "Ref": "apiInstagramGraphQLAPIIdOutput"
                       },
                       "/types/Mutation/*"
                     ]
@@ -318,7 +318,7 @@
                           [
                             "User-",
                             {
-                              "Ref": "apiinstagramGraphQLAPIIdOutput"
+                              "Ref": "apiInstagramGraphQLAPIIdOutput"
                             },
                             "-",
                             {

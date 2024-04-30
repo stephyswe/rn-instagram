@@ -469,12 +469,12 @@ migration guide: https://docs.amplify.aws/javascript/build-a-backend/auth/auth-m
 
 rename project (if req):
 ```
-npx react-native-rename "notJust Photos" -b dev.notjust.photos`
+npx react-native-rename "notJust Photos" -b dev.notjust.photos
 ios: 
 open in xcode - general - change "bundle identifier"
 npx pod-install ios
 .
-mpm start -- --reset-cache
+npm start -- --reset-cache
 ```
 
 email instead of username (v5-issue /w social login)
@@ -546,7 +546,7 @@ FACEBOOK
 - based on: android/app/src/main/AndroidManifest.xml - android:scheme
 
 GOOGLE
-- Authentication - add login mechanism - Facebook
+- Authentication - add login mechanism - Google
 * add id and secret
 
 copy <redirect url>
@@ -669,7 +669,7 @@ const updatedConfig = {
 };
 ```
 
-### 38_6.7 Lamda triggers
+### 38_6.7 Lambda triggers
 
 https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html
 
@@ -718,7 +718,7 @@ FIX if not notjustphotos://
 
 app
 ```
-validate folder ampify/backendfunction/instagramPostConfirmation
+validate folder ampify/backend/function/InstagramPostConfirmation
 - add in src/custom.js - console.log('lambda'); console.log(event);
 
 cmd: 
@@ -730,7 +730,7 @@ amplify push - Yes
 amplify console
 
 (Amplify Studio)
-Setup - Functions - Deployed functions resources (one entry - instagramPostConfirmation) - Open!
+Setup - Functions - Deployed functions resources (one entry - InstagramPostConfirmation) - Open!
 - Code source - valdiate custom.js has console logs
 - Monitor tab - (in not appear, make sure to delete user first)
 
@@ -1034,7 +1034,7 @@ Commit: rename PostUploadScreen to CameraScreen
 
 Commit: fix: add index.ts to all screens
 
-Commit: Add UploadStackNavigator & reroute to CreatePostSCreen
+Commit: Add UploadStackNavigator & reroute to CreatePostScreen
 
 - add mutation createPost to CreatePostScreen
 - add input according to CreatePostInput
@@ -1082,5 +1082,72 @@ amplify push -yes
 - check schema.graphql for LikesForPostByUser in queries
 
 Commit: FeedPost - custom likesForPostByUser query
+
+```
+
+### FIX_DB Reinstall Amplify Studio
+
+```
+amplify delete
+
+.recreate project
+
+### 30_5.4 Create the app backend
+### 31_5.5 Connect our app to the backend
+
+npx react-native-rename "notJust Photos" -b dev.notjust.photos
+
+### 33_6.2 Basic Authentication
+### 35_6.4 Social providers prerequisite
+
+.Google Login
+- AWS Studio - Authentication - Add Login: Google
++ sign in & sign-out: notjustphotos://
+- copy & add redirect URL to Cloud Google - Credentials -
+- Auth JS orgins: <redirect url until .com>
+- Redirect URIs <redirect url>
+- Deploy & "amplify pull ..." in project
+
+cmd: npm run start & npm run android
+APP: open & create Google account 
+- Check in Cognito
+
+### 38_6.7 Lambda triggers
+- paste custom.js
+
+### 39_7.3 Data Modeling (LONG!)
+
+!!IMPORTANT - Amplify Studio - Content
+- Create data model -  GraphQL API settings - enable conflict resolution (auto merge)
+> enables "_deleted" field
+
+.Generate
+- Content - User - gen 10 entrees 
+- AppSync - queries - create 1 post with 1 comment
+.
+mutation myMutation {
+  createPost(input: {nofComments: 0, nofLikes: 0, userID: [FROM listUsers]})
+}
+.
+
+.VALIDATE RUN APP
+
+### 42_7.7 Users CRUD
+
+### 43_7.8 User unique username
+
+.VALIADATE RUN APP
+
+### 44_7.9 Posts CRUD
+
+.VALIDATE RUN APP
+> Edit Post in Amplify Studio - scroll down in Feed
+
+### 45_7.10 Likes CRUD
+
+> Add Policy
+
+
+
 
 ```

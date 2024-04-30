@@ -3,8 +3,8 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "instag1bde08b8",
-    "userPoolName": "instagram",
+    "resourceNameTruncated": "instag11cc3e3c",
+    "userPoolName": "Instagram",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -21,19 +21,16 @@
     "passwordPolicyCharacters": [
       "Requires Lowercase"
     ],
-    "requiredAttributes": [
-      "email",
-      "name"
-    ],
+    "requiredAttributes": [],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "instag1bde08b8_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "Instag11cc3e3c_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "1bde08b8",
-    "resourceName": "instagram",
+    "sharedId": "11cc3e3c",
+    "resourceName": "Instagram",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
     "usernameAttributes": [
@@ -45,6 +42,12 @@
     "adminQueries": false,
     "thirdPartyAuth": false,
     "authProviders": [],
+    "hostedUI": true,
+    "hostedUIDomainName": "h6kkcxonlxj5",
+    "authProvidersUserPool": [
+      "Google"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid profile\",\"AttributeMapping\":{\"username\":\"sub\"}}]",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
     "authRoleArn": {
@@ -63,7 +66,7 @@
     "dependsOn": [
       {
         "category": "function",
-        "resourceName": "instagramPostConfirmation",
+        "resourceName": "InstagramPostConfirmation",
         "triggerProvider": "Cognito",
         "attributes": [
           "Arn",
@@ -71,13 +74,6 @@
         ]
       }
     ],
-    "hostedUI": true,
-    "hostedUIDomainName": "tuj46usdv6i0",
-    "authProvidersUserPool": [
-      "Facebook",
-      "Google"
-    ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"name\":\"name\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"name\":\"name\",\"username\":\"sub\"}}]",
     "triggers": {
       "PostConfirmation": [
         "custom"
@@ -87,7 +83,7 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"instagramPostConfirmation\"\n  }\n]",
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"InstagramPostConfirmation\"\n  }\n]",
     "permissions": []
   }
 }

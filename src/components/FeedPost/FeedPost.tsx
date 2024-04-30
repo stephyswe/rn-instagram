@@ -18,10 +18,12 @@ import DoublePressable from '../DoublePressable';
 import VideoPlayer from '../VideoPlayer';
 import PostMenu from './PostMenu';
 
-import {createLike, likesForPostByUser} from './queries';
+import {createLike, deleteLike, likesForPostByUser} from './queries';
 import {
   CreateLikeMutation,
   CreateLikeMutationVariables,
+  DeleteLikeMutation,
+  DeleteLikeMutationVariables,
   LikesForPostByUserQuery,
   LikesForPostByUserQueryVariables,
   Post,
@@ -44,6 +46,14 @@ const FeedPost = (props: IFeedPost) => {
 
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
+  const [doCreateLike] = useMutation<
+    CreateLikeMutation,
+    CreateLikeMutationVariables
+  >(createLike, {
+    variables: {input: {userID: userId, postID: post.id}},
+    refetchQueries: ['LikesForPostByUser'],
+  });
+
   const {data: usersLikeData} = useQuery<
     LikesForPostByUserQuery,
     LikesForPostByUserQueryVariables
@@ -54,16 +64,13 @@ const FeedPost = (props: IFeedPost) => {
     },
   });
 
-  const [doCreateLike] = useMutation<
-    CreateLikeMutation,
-    CreateLikeMutationVariables
-  >(createLike, {
-    variables: {input: {userID: userId, postID: post.id}},
-    refetchQueries: ['LikesForPostByUser'],
-  });
+  const [doDeleteLike] = useMutation<
+    DeleteLikeMutation,
+    DeleteLikeMutationVariables
+  >(deleteLike);
 
-  console.log(usersLikeData);
-  const userLike = usersLikeData?.likesForPostByUser?.items?.[0];
+  const userLike = usersLikeData?.LikesForPostByUser?.items?.[0];
+  //console.log('userLike', userLike);
 
   const navigateToUser = () => {
     // navigate
@@ -82,10 +89,25 @@ const FeedPost = (props: IFeedPost) => {
     setIsDescriptionExpanded(v => !v);
   };
 
-  const toggleLike = async () => {
-    console.warn('toogleLike');
-    const response = await doCreateLike();
-    console.log('createLike', response);
+  const toggleLike = () => {
+    if (userLike) {
+      const userId = userLike?.id;
+      console.log('delete like', userId);
+      doDeleteLike({
+        variables: {
+          input: {id: userLike.id},
+        },
+        onError(error, clientOptions) {
+          //console.log('error 1', error);
+        },
+        onCompleted(data, clientOptions) {
+          //console.log('delete comlpete', data, clientOptions);
+        },
+      });
+    } else {
+      doCreateLike();
+      console.log('create like');
+    }
   };
 
   let content = null;
@@ -121,6 +143,7 @@ const FeedPost = (props: IFeedPost) => {
           }}
           style={styles.userAvatar}
         />
+        
         <Text onPress={navigateToUser} style={styles.userName}>
           {post.User?.username}
         </Text>

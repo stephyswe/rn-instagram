@@ -1,29 +1,29 @@
 {
   "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-instagram-staging-3049c-authRole",
-      "UnauthRoleArn": "arn:aws:iam::312915967906:role/amplify-instagram-staging-3049c-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::312915967906:role/amplify-instagram-staging-3049c-authRole",
+      "AuthRoleName": "amplify-instagram-staging-a65b8-authRole",
+      "UnauthRoleArn": "arn:aws:iam::312915967906:role/amplify-instagram-staging-a65b8-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::312915967906:role/amplify-instagram-staging-a65b8-authRole",
       "Region": "eu-north-1",
-      "DeploymentBucketName": "amplify-instagram-staging-3049c-deployment",
-      "UnauthRoleName": "amplify-instagram-staging-3049c-unauthRole",
-      "StackName": "amplify-instagram-staging-3049c",
-      "StackId": "arn:aws:cloudformation:eu-north-1:312915967906:stack/amplify-instagram-staging-3049c/21262990-fc26-11ee-b5c6-0afe5f77460e",
-      "AmplifyAppId": "d2e0oxvbvt3bx7",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-instagram-staging-3049c-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+      "DeploymentBucketName": "amplify-instagram-staging-a65b8-deployment",
+      "UnauthRoleName": "amplify-instagram-staging-a65b8-unauthRole",
+      "StackName": "amplify-instagram-staging-a65b8",
+      "StackId": "arn:aws:cloudformation:eu-north-1:312915967906:stack/amplify-instagram-staging-a65b8/a2c94db0-06df-11ef-8cd6-0efbba8db476",
+      "AmplifyAppId": "dduzd3kgplnj9",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-instagram-staging-a65b8-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
-        "instagram": {}
+        "Instagram": {}
       },
       "function": {
-        "instagramPostConfirmation": {
-          "deploymentBucketName": "amplify-instagram-staging-3049c-deployment",
-          "s3Key": "amplify-builds/instagramPostConfirmation-63794458653757687168-build.zip"
+        "InstagramPostConfirmation": {
+          "deploymentBucketName": "amplify-instagram-staging-a65b8-deployment",
+          "s3Key": "amplify-builds/InstagramPostConfirmation-6e42707a496335557479-build.zip"
         }
       },
       "api": {
-        "instagram": {}
+        "Instagram": {}
       }
     }
   }

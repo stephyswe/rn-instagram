@@ -3,19 +3,19 @@
   "modules": [
     "custom"
   ],
-  "parentResource": "instagram",
-  "functionName": "instagramPostConfirmation",
-  "resourceName": "instagramPostConfirmation",
+  "parentResource": "Instagram",
+  "functionName": "InstagramPostConfirmation",
+  "resourceName": "InstagramPostConfirmation",
   "parentStack": "auth",
   "triggerEnvs": "[]",
   "triggerDir": "C:\\snapshot\\amplify-cli\\build\\node_modules\\@aws-amplify\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\PostConfirmation",
   "triggerTemplate": "PostConfirmation.json.ejs",
   "triggerEventPath": "PostConfirmation.event.json",
-  "roleName": "instagramPostConfirmation",
+  "roleName": "InstagramPostConfirmation",
   "skipEdit": true,
   "permissions": {
     "api": {
-      "instagram": [
+      "Instagram": [
         "Query",
         "Mutation"
       ]

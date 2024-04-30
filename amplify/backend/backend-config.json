@@ -1,6 +1,6 @@
 {
   "api": {
-    "instagram": {
+    "Instagram": {
       "dependsOn": [],
       "output": {
         "authConfig": {
@@ -23,7 +23,7 @@
     }
   },
   "auth": {
-    "instagram": {
+    "Instagram": {
       "customAuth": false,
       "dependsOn": [
         {
@@ -32,7 +32,7 @@
             "Name"
           ],
           "category": "function",
-          "resourceName": "instagramPostConfirmation",
+          "resourceName": "InstagramPostConfirmation",
           "triggerProvider": "Cognito"
         }
       ],
@@ -47,12 +47,8 @@
           ],
           "passwordPolicyMinLength": 8
         },
-        "signupAttributes": [
-          "EMAIL",
-          "NAME"
-        ],
+        "signupAttributes": [],
         "socialProviders": [
-          "FACEBOOK",
           "GOOGLE"
         ],
         "usernameAttributes": [
@@ -67,7 +63,7 @@
     }
   },
   "function": {
-    "instagramPostConfirmation": {
+    "InstagramPostConfirmation": {
       "build": true,
       "dependsOn": [
         {
@@ -77,7 +73,7 @@
             "GraphQLAPIKeyOutput"
           ],
           "category": "api",
-          "resourceName": "instagram"
+          "resourceName": "Instagram"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -85,19 +81,19 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_instagramPostConfirmation_deploymentBucketName": {
+    "AMPLIFY_function_InstagramPostConfirmation_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "instagramPostConfirmation"
+          "resourceName": "InstagramPostConfirmation"
         }
       ]
     },
-    "AMPLIFY_function_instagramPostConfirmation_s3Key": {
+    "AMPLIFY_function_InstagramPostConfirmation_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "instagramPostConfirmation"
+          "resourceName": "InstagramPostConfirmation"
         }
       ]
     }
