@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {View, Text, Image, TextInput, StyleSheet, Alert} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useMutation} from '@apollo/client';
 
 import colors from '../../theme/colors';
@@ -19,6 +20,8 @@ const Input = ({postId}: IInput) => {
   const {userId} = useAuthContext();
 
   const [newComment, setNewComment] = useState('');
+
+  const insets = useSafeAreaInsets();
 
   const [doCreateComment] = useMutation<
     CreateCommentMutation,
@@ -46,7 +49,7 @@ const Input = ({postId}: IInput) => {
   };
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, {paddingBottom: insets.bottom}]}>
       <Image
         source={{
           uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg',
@@ -61,7 +64,9 @@ const Input = ({postId}: IInput) => {
         multiline
       />
 
-      <Text onPress={onPost} style={styles.button}>
+      <Text
+        onPress={onPost}
+        style={[styles.button, {bottom: insets.bottom + 7}]}>
         POST
       </Text>
     </View>
