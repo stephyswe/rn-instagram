@@ -1,49 +1,24 @@
 import {useState} from 'react';
-import {View, Text, Image, TextInput, StyleSheet, Alert} from 'react-native';
+import {View, Text, Image, TextInput, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useMutation} from '@apollo/client';
 
 import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
 
-import {useAuthContext} from '../../contexts/AuthContext';
-
-import {CreateCommentMutation, CreateCommentMutationVariables} from '../../API';
-
-import {createComment} from './queries';
+import useCommentService from '../../services/CommentService';
 
 interface IInput {
   postId: string;
 }
 
 const Input = ({postId}: IInput) => {
-  const {userId} = useAuthContext();
+  const insets = useSafeAreaInsets();
+  const {onCreateComment} = useCommentService(postId);
 
   const [newComment, setNewComment] = useState('');
 
-  const insets = useSafeAreaInsets();
-
-  const [doCreateComment] = useMutation<
-    CreateCommentMutation,
-    CreateCommentMutationVariables
-  >(createComment, {
-    refetchQueries: ['CommentsByPost'],
-  });
-
   const onPost = async () => {
-    try {
-      await doCreateComment({
-        variables: {
-          input: {
-            postID: postId,
-            userID: userId,
-            comment: newComment,
-          },
-        },
-      });
-    } catch (e) {
-      Alert.alert('Error submitting an comment', (e as Error).message);
-    }
+    onCreateComment(newComment);
 
     setNewComment('');
   };

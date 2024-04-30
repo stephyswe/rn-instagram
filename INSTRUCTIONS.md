@@ -1184,4 +1184,7 @@ Commit: CommentScreen - Show Comments
 
 Commit: Fix Input - IOS useSafeAreaInsets
 
+APP: Create Comment - Comment Num Inc 
+
+Commit: Add CommentService
 ```
