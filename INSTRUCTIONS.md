@@ -1156,4 +1156,7 @@ Commit: fix: schema.graphql - type Like - Post as Post
 - add one like from "main user"
 - Register new user "Support" - add second like
 
+Commit: FeedPost - doUpdatePost, incrementLikes and upd Like content
+
+Commit: Add useLikeService
 ```
