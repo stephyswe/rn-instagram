@@ -1144,8 +1144,7 @@ mutation myMutation {
 > Edit Post in Amplify Studio - scroll down in Feed
 
 ### 45_7.10 Likes CRUD
-
-->
+```
 
 ### 45_7.10 Likes CRUD (contin.)
 
@@ -1159,4 +1158,24 @@ Commit: fix: schema.graphql - type Like - Post as Post
 Commit: FeedPost - doUpdatePost, incrementLikes and upd Like content
 
 Commit: Add useLikeService
+```
+
+### 46_7.11 Comments CRUD
+
+```
+
+- update schema.graphql
+type Comment @model @auth(rules: [{allow: public}]) {
+  ...
+  postID: ID!
+    @index(
+      name: "byPost"
+      queryField: "commentsByPost"
+    )
+}
+
+APP: HomeScreen - Click "view comments" - Add Comment 
+
+Commit: CommentScreen - Input add Comment
+
 ```

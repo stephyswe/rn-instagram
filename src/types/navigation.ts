@@ -41,6 +41,9 @@ export type CreateRouteProp = RouteProp<
   'Create'
 >;
 
+export type CommentsRouteProp = RouteProp<RootNavigatorParamList, 'Comments'>;
+
+
 export type SearchTabNavigatorParamList = {
   Users: undefined;
   Posts: undefined;
