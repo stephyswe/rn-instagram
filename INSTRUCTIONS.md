@@ -1165,6 +1165,8 @@ Commit: Add useLikeService
 ```
 
 - update schema.graphql
+amplify codegen
+
 type Comment @model @auth(rules: [{allow: public}]) {
   ...
   postID: ID!
@@ -1177,5 +1179,7 @@ type Comment @model @auth(rules: [{allow: public}]) {
 APP: HomeScreen - Click "view comments" - Add Comment 
 
 Commit: CommentScreen - Input add Comment
+
+Commit: CommentScreen - Show Comments
 
 ```

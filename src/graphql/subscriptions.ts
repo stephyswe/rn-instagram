@@ -42,24 +42,33 @@ export const onCreateLike = /* GraphQL */ `subscription OnCreateLike($filter: Mo
     }
     Post {
       id
-      name
-      email
-      username
-      bio
-      website
-      nofPosts
-      nofFollowers
-      nofFollowings
+      description
       image
-      Posts {
+      images
+      video
+      nofComments
+      nofLikes
+      userID
+      User {
+        id
+        name
+        email
+        username
+        bio
+        website
+        nofPosts
+        nofFollowers
+        nofFollowings
+        image
+        createdAt
+        updatedAt
+        __typename
+      }
+      Likes {
         nextToken
         __typename
       }
       Comments {
-        nextToken
-        __typename
-      }
-      Likes {
         nextToken
         __typename
       }
@@ -110,24 +119,33 @@ export const onUpdateLike = /* GraphQL */ `subscription OnUpdateLike($filter: Mo
     }
     Post {
       id
-      name
-      email
-      username
-      bio
-      website
-      nofPosts
-      nofFollowers
-      nofFollowings
+      description
       image
-      Posts {
+      images
+      video
+      nofComments
+      nofLikes
+      userID
+      User {
+        id
+        name
+        email
+        username
+        bio
+        website
+        nofPosts
+        nofFollowers
+        nofFollowings
+        image
+        createdAt
+        updatedAt
+        __typename
+      }
+      Likes {
         nextToken
         __typename
       }
       Comments {
-        nextToken
-        __typename
-      }
-      Likes {
         nextToken
         __typename
       }
@@ -178,24 +196,33 @@ export const onDeleteLike = /* GraphQL */ `subscription OnDeleteLike($filter: Mo
     }
     Post {
       id
-      name
-      email
-      username
-      bio
-      website
-      nofPosts
-      nofFollowers
-      nofFollowings
+      description
       image
-      Posts {
+      images
+      video
+      nofComments
+      nofLikes
+      userID
+      User {
+        id
+        name
+        email
+        username
+        bio
+        website
+        nofPosts
+        nofFollowers
+        nofFollowings
+        image
+        createdAt
+        updatedAt
+        __typename
+      }
+      Likes {
         nextToken
         __typename
       }
       Comments {
-        nextToken
-        __typename
-      }
-      Likes {
         nextToken
         __typename
       }

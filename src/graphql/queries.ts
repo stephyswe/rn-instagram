@@ -42,24 +42,33 @@ export const getLike = /* GraphQL */ `query GetLike($id: ID!) {
     }
     Post {
       id
-      name
-      email
-      username
-      bio
-      website
-      nofPosts
-      nofFollowers
-      nofFollowings
+      description
       image
-      Posts {
+      images
+      video
+      nofComments
+      nofLikes
+      userID
+      User {
+        id
+        name
+        email
+        username
+        bio
+        website
+        nofPosts
+        nofFollowers
+        nofFollowings
+        image
+        createdAt
+        updatedAt
+        __typename
+      }
+      Likes {
         nextToken
         __typename
       }
       Comments {
-        nextToken
-        __typename
-      }
-      Likes {
         nextToken
         __typename
       }
@@ -100,15 +109,13 @@ export const listLikes = /* GraphQL */ `query ListLikes(
       }
       Post {
         id
-        name
-        email
-        username
-        bio
-        website
-        nofPosts
-        nofFollowers
-        nofFollowings
+        description
         image
+        images
+        video
+        nofComments
+        nofLikes
+        userID
         createdAt
         updatedAt
         __typename
@@ -157,15 +164,13 @@ export const likesByUserID = /* GraphQL */ `query LikesByUserID(
       }
       Post {
         id
-        name
-        email
-        username
-        bio
-        website
-        nofPosts
-        nofFollowers
-        nofFollowings
+        description
         image
+        images
+        video
+        nofComments
+        nofLikes
+        userID
         createdAt
         updatedAt
         __typename
@@ -219,15 +224,13 @@ export const likesForPostByUser = /* GraphQL */ `query LikesForPostByUser(
       }
       Post {
         id
-        name
-        email
-        username
-        bio
-        website
-        nofPosts
-        nofFollowers
-        nofFollowings
+        description
         image
+        images
+        video
+        nofComments
+        nofLikes
+        userID
         createdAt
         updatedAt
         __typename
@@ -432,14 +435,14 @@ export const commentsByUserID = /* GraphQL */ `query CommentsByUserID(
   APITypes.CommentsByUserIDQueryVariables,
   APITypes.CommentsByUserIDQuery
 >;
-export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
+export const commentsByPost = /* GraphQL */ `query CommentsByPost(
   $postID: ID!
   $sortDirection: ModelSortDirection
   $filter: ModelCommentFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  commentsByPostID(
+  commentsByPost(
     postID: $postID
     sortDirection: $sortDirection
     filter: $filter
@@ -488,8 +491,8 @@ export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
   }
 }
 ` as GeneratedQuery<
-  APITypes.CommentsByPostIDQueryVariables,
-  APITypes.CommentsByPostIDQuery
+  APITypes.CommentsByPostQueryVariables,
+  APITypes.CommentsByPostQuery
 >;
 export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
   getPost(id: $id) {

@@ -23,7 +23,9 @@ const Input = ({postId}: IInput) => {
   const [doCreateComment] = useMutation<
     CreateCommentMutation,
     CreateCommentMutationVariables
-  >(createComment);
+  >(createComment, {
+    refetchQueries: ['CommentsByPost'],
+  });
 
   const onPost = async () => {
     try {
