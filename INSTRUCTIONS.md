@@ -1245,4 +1245,6 @@ query QueryComments {commentsByPost(postID: "", , limit: 2) {items {id comment}n
 use nextToken for next page
 
 Commit: Pagination in CommentScreen /w ApolloClient - Click "LoadMore"
+
+Commit: Pagination in HomeScreen - Infinite Scroll
 ```

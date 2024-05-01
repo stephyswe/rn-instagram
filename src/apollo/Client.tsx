@@ -30,20 +30,26 @@ const link = ApolloLink.from([
   createSubscriptionHandshakeLink({url, region, auth}, httpLink),
 ]);
 
+const mergeLists = (existing = {items: []}, incoming = {items: []}) => {
+  // Slicing is necessary because the existing data is
+  // immutable, and frozen in development.
+  return {
+    ...existing,
+    ...incoming,
+    items: [...(existing.items || []), ...incoming.items],
+  };
+};
+
 const typePolicies: TypePolicies = {
   Query: {
     fields: {
       commentsByPost: {
         keyArgs: ['postID', 'sortDirection', 'filter'],
-        merge(existing = {}, incoming) {
-          // Slicing is necessary because the existing data is
-          // immutable, and frozen in development.
-          return {
-            ...existing,
-            ...incoming,
-            items: [...(existing.items || []), ...incoming.items],
-          };
-        },
+        merge: mergeLists,
+      },
+      postsByDate: {
+        keyArgs: ['type', 'createdAt', 'sortDirection', 'filter'],
+        merge: mergeLists,
       },
     },
   },
