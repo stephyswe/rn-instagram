@@ -1288,4 +1288,6 @@ Validation:
 - run AppSync in same post - subscription data
 
 Commit: Realtime data - show subdata on current post
+
+Commit: Realtime data - show new comment from AppSync
 ```

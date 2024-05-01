@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {View, FlatList, ActivityIndicator, Text} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {useQuery, useSubscription} from '@apollo/client';
@@ -13,23 +13,22 @@ import {CommentsRouteProp} from '../../types/navigation';
 import {commentsByPost, onCreateCommentByPostId} from './queries';
 
 import {
+  Comment as CommentType,
   CommentsByPostQuery,
   CommentsByPostQueryVariables,
   ModelSortDirection,
   OnCreateCommentByPostIdSubscription,
   OnCreateCommentByPostIdSubscriptionVariables,
 } from '../../API';
-import {useAuthContext} from '../../contexts/AuthContext';
 
 const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
   const {postId} = route.params;
-  const {userId} = useAuthContext();
-  console.log('postId', postId, userId);
 
   const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const [newComments, setNewComments] = useState<CommentType[]>([]);
 
-  const {data, loading, error, refetch, fetchMore} = useQuery<
+  const {data, loading, error, fetchMore} = useQuery<
     CommentsByPostQuery,
     CommentsByPostQueryVariables
   >(commentsByPost, {
@@ -45,12 +44,20 @@ const CommentsScreen = () => {
     OnCreateCommentByPostIdSubscriptionVariables
   >(onCreateCommentByPostId, {
     variables: {
-      postID: postId
-    }
+      postID: postId,
+    },
   });
-  console.log('new Sub', newCommentsData);
 
   const nextToken = data?.commentsByPost?.nextToken;
+
+  useEffect(() => {
+    if (newCommentsData?.onCreateCommentByPostId) {
+      setNewComments(existingNewComments => [
+        newCommentsData.onCreateCommentByPostId as CommentType,
+        ...existingNewComments,
+      ]);
+    }
+  }, [newCommentsData]);
 
   const loadMore = async () => {
     if (!nextToken || isFetchingMore) {
@@ -59,6 +66,10 @@ const CommentsScreen = () => {
     setIsFetchingMore(true);
     await fetchMore({variables: {nextToken}});
     setIsFetchingMore(false);
+  };
+
+  const isNewComment = (comment: CommentType) => {
+    return newComments.some(c => c.id === comment.id);
   };
 
   if (loading) {
@@ -79,15 +90,13 @@ const CommentsScreen = () => {
   return (
     <View style={{flex: 1}}>
       <FlatList
-        data={comments}
+        data={[...newComments, ...comments]}
         renderItem={({item}) => <Comment item={item} includeDetails />}
         style={{padding: 10}}
         inverted
         ListEmptyComponent={() => (
           <Text>No comments. Be the first comment</Text>
         )}
-        refreshing={loading}
-        onRefresh={refetch}
         onEndReached={() => loadMore()}
       />
       <Input postId={postId} />
