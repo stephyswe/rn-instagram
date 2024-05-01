@@ -86,8 +86,6 @@ const CommentsScreen = () => {
   }
 
   const comments = data?.commentsByPost?.items || [];
-  console.log('all comments', comments)
-  console.log('newCommentsData', newCommentsData)
 
   return (
     <View style={{flex: 1}}>
