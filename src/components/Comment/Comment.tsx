@@ -11,9 +11,14 @@ import {DEFAULT_USER_IMAGE} from '../../config';
 interface ICommentProps {
   item: CommentType;
   includeDetails?: boolean;
+  isNew?: boolean;
 }
 
-const Comment = ({item, includeDetails = false}: ICommentProps) => {
+const Comment = ({
+  item,
+  includeDetails = false,
+  isNew = false,
+}: ICommentProps) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const toggleLike = () => {
@@ -36,7 +41,10 @@ const Comment = ({item, includeDetails = false}: ICommentProps) => {
 
         {includeDetails && (
           <View style={styles.footer}>
-            <Text style={styles.footerText}>{dayjs(item.createdAt).fromNow()}</Text>
+            {isNew && <Text style={styles.new}>new</Text>}
+            <Text style={styles.footerText}>
+              {dayjs(item.createdAt).fromNow()}
+            </Text>
             <Text style={styles.footerText}>5 likes</Text>
             <Text style={styles.footerText}>Reply</Text>
           </View>
@@ -84,6 +92,14 @@ const styles = StyleSheet.create({
   },
   footerText: {
     marginRight: 10,
+  },
+  new: {
+    backgroundColor: colors.primary,
+    color: colors.white,
+    paddingHorizontal: 5,
+    marginRight: 5,
+    borderRadius: 5,
+    overflow: 'hidden',
   },
 });
 

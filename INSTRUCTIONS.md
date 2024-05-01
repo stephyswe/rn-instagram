@@ -1290,4 +1290,8 @@ Validation:
 Commit: Realtime data - show subdata on current post
 
 Commit: Realtime data - show new comment from AppSync
+
+Commit: Realtime data - isNew prop for new comments
+
+Issue: subscribed comments not show in "data" - troubleshoot more
 ```

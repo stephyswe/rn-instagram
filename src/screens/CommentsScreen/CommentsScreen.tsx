@@ -86,12 +86,18 @@ const CommentsScreen = () => {
   }
 
   const comments = data?.commentsByPost?.items || [];
+  console.log('all comments', comments)
+  console.log('newCommentsData', newCommentsData)
 
   return (
     <View style={{flex: 1}}>
       <FlatList
         data={[...newComments, ...comments]}
-        renderItem={({item}) => <Comment item={item} includeDetails />}
+        renderItem={({item}) =>
+          item && (
+            <Comment item={item} includeDetails isNew={isNewComment(item)} />
+          )
+        }
         style={{padding: 10}}
         inverted
         ListEmptyComponent={() => (
