@@ -31,7 +31,7 @@ const CommentsScreen = () => {
     variables: {
       postID: postId,
       sortDirection: ModelSortDirection.DESC,
-      limit: 3,
+      limit: 20,
     },
   });
 
@@ -71,13 +71,9 @@ const CommentsScreen = () => {
         ListEmptyComponent={() => (
           <Text>No comments. Be the first comment</Text>
         )}
-        ListFooterComponent={() => (
-          <Text onPress={loadMore} style={{padding: 10}}>
-            Load more
-          </Text>
-        )}
         refreshing={loading}
         onRefresh={refetch}
+        onEndReached={() => loadMore()}
       />
       <Input postId={postId} />
     </View>
