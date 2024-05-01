@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {View, FlatList, ActivityIndicator, Text} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {useQuery} from '@apollo/client';
@@ -21,15 +22,29 @@ const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
   const {postId} = route.params;
 
-  const {data, loading, error, refetch} = useQuery<
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
+
+  const {data, loading, error, refetch, fetchMore} = useQuery<
     CommentsByPostQuery,
     CommentsByPostQueryVariables
   >(commentsByPost, {
     variables: {
       postID: postId,
       sortDirection: ModelSortDirection.DESC,
+      limit: 3,
     },
   });
+
+  const nextToken = data?.commentsByPost?.nextToken;
+
+  const loadMore = async () => {
+    if (!nextToken || isFetchingMore) {
+      return;
+    }
+    setIsFetchingMore(true);
+    await fetchMore({variables: {nextToken}});
+    setIsFetchingMore(false);
+  };
 
   if (loading) {
     return <ActivityIndicator />;
@@ -55,6 +70,11 @@ const CommentsScreen = () => {
         inverted
         ListEmptyComponent={() => (
           <Text>No comments. Be the first comment</Text>
+        )}
+        ListFooterComponent={() => (
+          <Text onPress={loadMore} style={{padding: 10}}>
+            Load more
+          </Text>
         )}
         refreshing={loading}
         onRefresh={refetch}

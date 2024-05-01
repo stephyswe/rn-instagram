@@ -1234,8 +1234,16 @@ APP: Create one Post - scroll-down to refresh
 
 ### 48_7.13 Pagination
 
-```
+https://www.apollographql.com/docs/react/pagination/core-api/
 
-...
+```
+amplify console - AWS Console - API - View in AppSync - Queries
+.
+query QueryPost {listPosts{items{id}}}
+query QueryComments {commentsByPost(postID: "", , limit: 2) {items {id comment}nexToken}}
+.
+use nextToken for next page
+
+Commit: Pagination in CommentScreen /w ApolloClient - Click "LoadMore"
 
 ```
