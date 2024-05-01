@@ -1362,5 +1362,21 @@ Commit: Add Amazon Cognito in Apollo
 
 Fix: In DynamoDB - Post - add ID to "owner" field
 RUN APP: Login - Create and Edit Post - Then Delete
+```
 
+### 51_8.2 Setup Storage
+
+```
+amplify add storage
+
+? Select from one of the below mentioned services: Content (Images, audio, video, etc.)
+√ Provide a friendly name for your resource that will be used to label this category in the project: · storage
+√ Provide bucket name: · notjustphotos-media-new
+√ Who should have access: · Auth users only
+√ What kind of access do you want for Authenticated users? · create/update, read, delete
+√ Do you want to add a Lambda Trigger for your S3 Bucket? (y/N) · no
+
+amplify push -yes
+
+AWS - S3
 ```
