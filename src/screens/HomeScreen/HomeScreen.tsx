@@ -10,18 +10,23 @@ import {useQuery} from '@apollo/client';
 import FeedPost from '../../components/FeedPost';
 import ApiErrorMessage from '../../components/ApiErrorMessage';
 
-import {listPosts} from './queries';
+import {postsByDate} from './queries';
 
-import {ListPostsQuery, ListPostsQueryVariables} from '../../API';
+import {
+  ModelSortDirection,
+  PostsByDateQuery,
+  PostsByDateQueryVariables,
+} from '../../API';
 
 const HomeScreen = () => {
   const [activePostId, setActivePostId] = useState<string | null>(null);
   const {data, loading, error, refetch} = useQuery<
-    ListPostsQuery,
-    ListPostsQueryVariables
-  >(listPosts, {
+    PostsByDateQuery,
+    PostsByDateQueryVariables
+  >(postsByDate, {
     variables: {
-      limit: 10,
+      type: 'POST',
+      sortDirection: ModelSortDirection.DESC,
     },
   });
 
@@ -47,7 +52,7 @@ const HomeScreen = () => {
     );
   }
 
-  const posts = data?.listPosts?.items || [];
+  const posts = data?.postsByDate?.items || [];
 
   return (
     <FlatList

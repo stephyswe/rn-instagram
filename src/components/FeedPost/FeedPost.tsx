@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import dayjs from 'dayjs';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
@@ -22,6 +23,7 @@ import {Post} from '../../API';
 import {DEFAULT_USER_IMAGE} from '../../config';
 
 import useLikeService from '../../services/LikeService';
+
 
 interface IFeedPost {
   post: Post;
@@ -168,7 +170,7 @@ const FeedPost = (props: IFeedPost) => {
         )}
 
         {/* Posted date */}
-        <Text style={styles.textBlack}>{post.createdAt}</Text>
+        <Text style={styles.textBlack}>{dayjs(post.createdAt).fromNow()}</Text>
       </View>
     </View>
   );

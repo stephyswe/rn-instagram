@@ -1187,4 +1187,55 @@ Commit: Fix Input - IOS useSafeAreaInsets
 APP: Create Comment - Comment Num Inc 
 
 Commit: Add CommentService
+
+EXTRA: Add DeleteComment (Popup-menu or SwipeLeft action)
+- LIKE for COMMENT
+```
+
+### 47_7.12 Sorting
+
+```
+npm i dayjs@^1.11.0 --legacy-peer-deps
+
+update schema.graphql 
+
+"""
+type Comment
+  ...
+  createdAt: AWSDateTime!
+  postID: ID!
+    @index(
+      ...
+      sortKeyFields: ["createdAt"]
+    )
+
+type Post @model @auth(rules: [{allow: public}]) {
+  ...
+  createdAt: AWSDateTime!
+  type: String!
+    @index(
+      name: "postsByDate"
+      queryField: "postsByDate"
+      sortKeyFields: ["createdAt"]
+    )
+  ...
+}
+"""
+
+amplify push -yes
+amplify codegen
+
+.remove Posts/Comment/Like rows
+- AppSync - Delete Post Row
+
+APP: Create one Post - scroll-down to refresh
+
+```
+
+### 48_7.13 Pagination
+
+```
+
+...
+
 ```

@@ -57,8 +57,6 @@ const useCommentService = (postId: string) => {
             return;
         }
 
-        console.log('newComment', newComment, post.id, userId)
-
         try {
             await doCreateComment({
                 variables: {

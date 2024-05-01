@@ -11,7 +11,11 @@ import {CommentsRouteProp} from '../../types/navigation';
 
 import {commentsByPost} from './queries';
 
-import {CommentsByPostQuery, CommentsByPostQueryVariables} from '../../API';
+import {
+  CommentsByPostQuery,
+  CommentsByPostQueryVariables,
+  ModelSortDirection,
+} from '../../API';
 
 const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
@@ -23,6 +27,7 @@ const CommentsScreen = () => {
   >(commentsByPost, {
     variables: {
       postID: postId,
+      sortDirection: ModelSortDirection.DESC,
     },
   });
 
@@ -47,6 +52,7 @@ const CommentsScreen = () => {
         data={comments}
         renderItem={({item}) => <Comment item={item} includeDetails />}
         style={{padding: 10}}
+        inverted
         ListEmptyComponent={() => (
           <Text>No comments. Be the first comment</Text>
         )}
