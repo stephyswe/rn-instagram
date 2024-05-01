@@ -10,23 +10,22 @@ import Input from './Input';
 
 import {CommentsRouteProp} from '../../types/navigation';
 
-import {commentsByPost, onCreateComment} from './queries';
+import {commentsByPost, onCreateCommentByPostId} from './queries';
 
 import {
   CommentsByPostQuery,
   CommentsByPostQueryVariables,
   ModelSortDirection,
-  OnCreateCommentSubscription,
-  OnCreateCommentSubscriptionVariables,
+  OnCreateCommentByPostIdSubscription,
+  OnCreateCommentByPostIdSubscriptionVariables,
 } from '../../API';
-import { useAuthContext } from '../../contexts/AuthContext';
+import {useAuthContext} from '../../contexts/AuthContext';
 
 const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
   const {postId} = route.params;
-  const {userId} = useAuthContext()
-  console.log('postId', postId, userId)
-  
+  const {userId} = useAuthContext();
+  console.log('postId', postId, userId);
 
   const [isFetchingMore, setIsFetchingMore] = useState(false);
 
@@ -40,11 +39,16 @@ const CommentsScreen = () => {
       limit: 20,
     },
   });
+
   const {data: newCommentsData} = useSubscription<
-    OnCreateCommentSubscription,
-    OnCreateCommentSubscriptionVariables
-  >(onCreateComment);
-  console.log("new Sub", newCommentsData); 
+    OnCreateCommentByPostIdSubscription,
+    OnCreateCommentByPostIdSubscriptionVariables
+  >(onCreateCommentByPostId, {
+    variables: {
+      postID: postId
+    }
+  });
+  console.log('new Sub', newCommentsData);
 
   const nextToken = data?.commentsByPost?.nextToken;
 

@@ -38,8 +38,8 @@ export const commentsByPost = gql`query CommentsByPost(
   }
   `;
 
-  export const onCreateComment = gql`subscription OnCreateComment($filter: ModelSubscriptionCommentFilterInput) {
-    onCreateComment(filter: $filter) {
+  export const onCreateCommentByPostId = gql`subscription OnCreateCommentByPostId($postID: ID!) {
+    onCreateCommentByPostId(postID: $postID) {
       id
       comment
       userID

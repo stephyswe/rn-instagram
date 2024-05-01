@@ -1269,4 +1269,23 @@ mutation MyMutation {
 log "new Sub" show Subscription data
 
 Commit: Realtime data - show Subscription data
+
+Issue:
+- run AppSync w/o all subfields - undefined subscription data
+- run AppSync being on another Post CommentScreen - get data from all posts (load issue)
+
+solution: only subscribe for comments on current post
+
+edit schema.graphql
+
+amplify push -yes
+amplify codegen
+
+add onCreateCommentByPostId to CommentsScreen
+
+Validation: 
+- run AppSync in another post - no subscription data
+- run AppSync in same post - subscription data
+
+Commit: Realtime data - show subdata on current post
 ```
