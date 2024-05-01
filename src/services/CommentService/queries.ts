@@ -28,6 +28,12 @@ export const createComment = gql`mutation CreateComment(
         updatedAt
         __typename
       }
+      User {
+        id
+        image
+        username
+        name
+      }
       createdAt
       updatedAt
       __typename

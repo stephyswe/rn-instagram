@@ -37,3 +37,29 @@ export const commentsByPost = gql`query CommentsByPost(
     }
   }
   `;
+
+  export const onCreateComment = gql`subscription OnCreateComment($filter: ModelSubscriptionCommentFilterInput) {
+    onCreateComment(filter: $filter) {
+      id
+      comment
+      userID
+      postID
+      Post {
+        id
+        nofComments
+        createdAt
+        updatedAt
+        __typename
+      }
+      User {
+        id
+        image
+        username
+        name
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+  `;

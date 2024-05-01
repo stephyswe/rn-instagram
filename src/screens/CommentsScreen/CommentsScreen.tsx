@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {View, FlatList, ActivityIndicator, Text} from 'react-native';
 import {useRoute} from '@react-navigation/native';
-import {useQuery} from '@apollo/client';
+import {useQuery, useSubscription} from '@apollo/client';
 
 import Comment from '../../components/Comment';
 import ApiErrorMessage from '../../components/ApiErrorMessage';
@@ -10,17 +10,23 @@ import Input from './Input';
 
 import {CommentsRouteProp} from '../../types/navigation';
 
-import {commentsByPost} from './queries';
+import {commentsByPost, onCreateComment} from './queries';
 
 import {
   CommentsByPostQuery,
   CommentsByPostQueryVariables,
   ModelSortDirection,
+  OnCreateCommentSubscription,
+  OnCreateCommentSubscriptionVariables,
 } from '../../API';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 const CommentsScreen = () => {
   const route = useRoute<CommentsRouteProp>();
   const {postId} = route.params;
+  const {userId} = useAuthContext()
+  console.log('postId', postId, userId)
+  
 
   const [isFetchingMore, setIsFetchingMore] = useState(false);
 
@@ -34,6 +40,11 @@ const CommentsScreen = () => {
       limit: 20,
     },
   });
+  const {data: newCommentsData} = useSubscription<
+    OnCreateCommentSubscription,
+    OnCreateCommentSubscriptionVariables
+  >(onCreateComment);
+  console.log("new Sub", newCommentsData); 
 
   const nextToken = data?.commentsByPost?.nextToken;
 

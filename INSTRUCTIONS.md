@@ -1248,3 +1248,25 @@ Commit: Pagination in CommentScreen /w ApolloClient - Click "LoadMore"
 
 Commit: Pagination in HomeScreen - Infinite Scroll
 ```
+
+### 49_7.14 Real Time Data
+
+https://www.apollographql.com/docs/react/data/queries/#polling
+https://www.apollographql.com/docs/react/data/subscriptions
+
+```
+copy subset fields createComment in CommentService to CommentScreen subscription
+
+add useSubscription to CommentScreen
+*RUN APP - then add Comment in AppSync Queries
+
+mutation MyMutation {
+  createComment(input: {comment: "Comment from AppSync", postID: "", userID: ""}) {
+    <paste subset fields>
+  }
+}
+
+log "new Sub" show Subscription data
+
+Commit: Realtime data - show Subscription data
+```
