@@ -29,7 +29,7 @@ const HomeScreen = () => {
     variables: {
       type: 'POST',
       sortDirection: ModelSortDirection.DESC,
-      limit: 2,
+      limit: 10,
     },
   });
 

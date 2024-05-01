@@ -61,6 +61,7 @@ exports.handler = async (event, context) => {
   // if not, save the user to database
   const newUser = {
     id: sub,
+    owner: sub,
     name,
     email,
     nofPosts: 0,

@@ -16,6 +16,7 @@ interface JwtPayloadStandardFields {
   scope?: string;
   jti?: string;
   sub?: string;
+  credentials?: string;
 }
 interface JsonObject {
   [x: string]: JsonPrimitive | JsonArray | JsonObject;
@@ -28,11 +29,13 @@ type UserType = JwtPayload | null | undefined;
 type AuthContextType = {
   user: UserType;
   userId: string;
+  jwtToken: string;
 };
 
 const AuthContext = createContext<AuthContextType>({
   user: undefined,
   userId: '',
+  jwtToken: '',
 });
 
 const AuthContextProvider = ({children}: {children: ReactNode}) => {
@@ -43,7 +46,13 @@ const AuthContextProvider = ({children}: {children: ReactNode}) => {
       const {tokens} = await fetchAuthSession();
       const authUser = tokens?.idToken?.payload;
 
-      setUser(authUser);
+      // Check if authUser is defined before attempting to add credentials
+      if (authUser) {
+        (authUser.credentials = (tokens?.accessToken || '').toString() || ''),
+          setUser(authUser);
+      } else {
+        setUser(null);
+      }
     } catch (e) {
       setUser(null);
     }
@@ -70,7 +79,12 @@ const AuthContextProvider = ({children}: {children: ReactNode}) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{user, userId: user?.sub || ''}}>
+    <AuthContext.Provider
+      value={{
+        user,
+        userId: user?.sub || '',
+        jwtToken: user?.credentials || '',
+      }}>
       {children}
     </AuthContext.Provider>
   );

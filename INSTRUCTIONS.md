@@ -1295,3 +1295,72 @@ Commit: Realtime data - isNew prop for new comments
 
 Issue: subscribed comments not show in "data" - troubleshoot more
 ```
+
+### 50_7.15 Authorization
+
+https://docs.amplify.aws/react-native/build-a-backend/graphqlapi/customize-authorization-rules/#authorization-strategies
+
+```
+edit schema.graphql - private, instead of public
+
+Authorization modes - Default: API key
+(Only if, public api or development)
+
+amplify update api
+* Select from one of the below mentioned services: GraphQL
+* Select a setting to edit: Authorization modes
+* Choose the default authorization type for the API: 
+> (only owner of object, edit - Amazon Cognito User Pool)
+> (loggedin & not loggedin users - IAM)
+> (external providers - OpenID Connect)
+> (create authorization funcs - Lambda)
+- Select: Amazon Cognito User Pool
+*  Configure additional auth types?: No
+
+⚠️ The API_KEY auth type has been removed from the API.
+⚠️ If other resources depend on this API, run "amplify update <category>" and reselect this API to remove the dependency on the API key.
+⚠️ This must be done before running "amplify push" to prevent a push failure
+
+amplify update function
+* Select the Lambda function you want to update: InstagramPostConfirmation
+* Which setting do you want to update?: Resource access permissions
+*  Select the categories you want this function to have access to.: <api, Enter>
+* Select the operations you want to permit on Instagram: <Query, Mutation, Enter>
+* Do you want to edit the local lambda function now?: No
+
+edit schema.graphql - @auth(rules: [{allow: private, operations: [read]}, {allow: owner}]) {
+
+amplify push -yes
+
+RUN APP: (Setup Profile - Error 401)
+solution: in DynomoDB - User item - Edit Item
+add String "owner" field with ID data
+
+AppSync - Queries - [auth provider: Amazon Cognito]
+query MyQuery {getUser(id: "") {id name}} - 401 error
+
+.Login
+* Press "Login With User Pools"
+- Client ID: clientWeb
+- email: <email in login>
+- password: <password in login>
+* Press "Run" - Success
+
+query MyQuery2 {listUsers {items {id name email}}} - Email null, not owner
+
+
+
+---
+
+** Troubleshooting **
+(if not edit schema.graphql)
+** 🛑 @auth directive with 'apiKey' provider found, but the project has no API Key authentication provider configured. ** 
+
+- refactor jwtToken in ApolloClient
+
+Commit: Add Amazon Cognito in Apollo
+
+Fix: In DynamoDB - Post - add ID to "owner" field
+RUN APP: Login - Create and Edit Post - Then Delete
+
+```
