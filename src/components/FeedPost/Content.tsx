@@ -18,6 +18,7 @@ interface IContent {
 
 const Content = ({post, isVisible, toggleLike}: IContent) => {
   const [imageUri, setImageUri] = useState<string | null>(null);
+  const [imagesUri, setImagesUri] = useState<string[] | null>(null);
 
   useEffect(() => {
     downloadMedia();
@@ -37,6 +38,19 @@ const Content = ({post, isVisible, toggleLike}: IContent) => {
       });
 
       setImageUri(getUrlResult.url.toString());
+    } else if (post.images) {
+      const uris = await Promise.all(
+        post.images.map(async img => {
+          const getUrlResult = await getUrl({
+            key: img,
+            options: {
+              validateObjectExistence: false, // Check if object exists before creating a URL
+            },
+          });
+          return getUrlResult.url.toString();
+        }),
+      );
+      setImagesUri(uris);
     }
   };
 
@@ -49,8 +63,8 @@ const Content = ({post, isVisible, toggleLike}: IContent) => {
         />
       </DoublePressable>
     );
-  } else if (post.images) {
-    return <Carousel images={post.images} onDoublePress={toggleLike} />;
+  } else if (imagesUri) {
+    return <Carousel images={imagesUri} onDoublePress={toggleLike} />;
   } else if (post.video) {
     return (
       <DoublePressable onDoublePress={toggleLike}>

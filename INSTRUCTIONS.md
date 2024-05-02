@@ -1412,3 +1412,9 @@ Commit: Allow scroll in CreatePostScreen
 
 Commit: Inset in CameraScreen to Pull down Top menu
 ```
+
+### 53_8.4 Uploading carousels
+
+```
+RUN APP: Select two images from PhotoGallery - Submit - see post /w carousel in HomeScreen
+```
