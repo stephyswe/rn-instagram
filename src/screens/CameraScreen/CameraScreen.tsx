@@ -15,6 +15,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../theme/colors';
 import {CameraNavigationProp} from '../../types/navigation';
 import {launchImageLibrary} from 'react-native-image-picker';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 // TODO: getSupportedRatiosAsync() in ratio - <Camera style={styles.camera} type={cameraType} ratio="4:3" />
 
@@ -41,6 +42,7 @@ const CameraScreen = () => {
 
   const camera = useRef<Camera>(null);
   const navigation = useNavigation<CameraNavigationProp>();
+  const inset = useSafeAreaInsets();
 
   useEffect(() => {
     const getPermission = async () => {
@@ -150,7 +152,7 @@ const CameraScreen = () => {
         flashMode={flash}
         onCameraReady={() => setIsCameraReady(true)}
       />
-      <View style={[styles.buttonsContainer, {top: 25}]}>
+      <View style={[styles.buttonsContainer, {top: inset.top + 25}]}>
         <MaterialIcons name="close" size={30} color={colors.white} />
 
         <Pressable onPress={flipFlash}>
