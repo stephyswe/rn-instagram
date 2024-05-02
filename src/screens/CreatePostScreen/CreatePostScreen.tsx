@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {View, TextInput, Image, StyleSheet, Alert} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useMutation} from '@apollo/client';
+import {uploadData} from 'aws-amplify/storage';
 
 import colors from '../../theme/colors';
 
@@ -9,7 +10,11 @@ import {CreateNavigationProp, CreateRouteProp} from '../../types/navigation';
 
 import {createPost} from './queries';
 
-import {CreatePostMutation, CreatePostMutationVariables} from '../../API';
+import {
+  CreatePostInput,
+  CreatePostMutation,
+  CreatePostMutationVariables,
+} from '../../API';
 
 import {useAuthContext} from '../../contexts/AuthContext';
 
@@ -53,29 +58,60 @@ const CreatePostScreen = () => {
     if (isSubmitting) {
       return;
     }
+
     setIsSubmitting(true);
 
+    const input: CreatePostInput = {
+      type: 'POST',
+      description,
+      image: undefined,
+      images: undefined,
+      video: undefined,
+      nofComments: 0,
+      nofLikes: 0,
+      userID: userId,
+    };
+
+    
+    
+
+    // upload media files to S3 and get the key
+    if (image) {
+      const imageKey = await uploadMedia(image);
+      input.image = imageKey;
+    }
+
     try {
-      const response = await doCreatePost({
-        variables: {
-          input: {
-            type: 'POST',
-            description,
-            image,
-            images,
-            video,
-            nofComments: 0,
-            nofLikes: 0,
-            userID: userId,
-          },
-        },
-      });
+      await doCreatePost({variables: {input}});
 
       navigation.popToTop();
       navigation.navigate('HomeStack');
     } catch (e) {
       Alert.alert('Error uploading the post', (e as Error).message);
       setIsSubmitting(false);
+    }
+  };
+
+  const uploadMedia = async (uri: string) => {
+    try {
+      // get the blob of the file from uri
+      const response = await fetch(uri);
+      console.log('response', response);
+      const blob = await response.blob();
+
+      // upload the file (blob) to S3
+      const s3Response = await uploadData({
+        key: 'image.png',
+        // Alternatively, path: ({identityId}) => `protected/${identityId}/album/2024/1.jpg`
+        data: blob,
+      }).result;
+
+      console.log(s3Response);
+
+      // return key
+      return s3Response.key;
+    } catch (error) {
+      Alert.alert('Error uploading the image');
     }
   };
 
@@ -105,8 +141,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    width: 200,
-    height: 200,
+    width: '100%',
     aspectRatio: 1,
   },
   input: {

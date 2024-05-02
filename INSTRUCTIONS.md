@@ -1366,6 +1366,8 @@ RUN APP: Login - Create and Edit Post - Then Delete
 
 ### 51_8.2 Setup Storage
 
+https://docs.amplify.aws/react-native/build-a-backend/storage/set-up-storage/
+
 ```
 amplify add storage
 
@@ -1379,4 +1381,18 @@ amplify add storage
 amplify push -yes
 
 AWS - S3
+```
+
+### 52_8.3 Uploading Images
+
+https://docs.amplify.aws/react-native/build-a-backend/storage/upload/
+
+```
+
+RUN APP: CameraScreen - Photo Gallery (icon bottom-left) - Select Image - Navigate to CreateScreen with image
+
+create Image - visit S3 Bucket to validate image file (public/image.png)
+issue: image doesn't show in home screen
+
+Commit: S3 upload image blob during Camera Screen
 ```
