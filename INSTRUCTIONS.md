@@ -1402,4 +1402,11 @@ Commit: Render Image from S3
 
 npm i uuid@^8.3.2 react-native-get-random-values@^1.8.0 --force
 
+Commit: Create Image from Camera + Image Type extension
+
+npm i react-native-keyboard-aware-scroll-view@^0.9.5 --force
+
+RUN APP: Take Picture - can scroll when edit description 
+
+Commit: Allow scroll in CreatePostScreen
 ```

@@ -4,6 +4,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {useMutation} from '@apollo/client';
 import {uploadData} from 'aws-amplify/storage';
 import {v4 as uuidV4} from 'uuid';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import colors from '../../theme/colors';
 
@@ -112,8 +113,9 @@ const CreatePostScreen = () => {
   };
 
   return (
-    <View style={styles.root}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.root}>
       <View style={styles.content}>{content}</View>
+
       <TextInput
         value={description}
         onChangeText={setDescription}
@@ -127,7 +129,7 @@ const CreatePostScreen = () => {
         text={isSubmitting ? 'Submitting...' : 'Submit'}
         onPress={submit}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
