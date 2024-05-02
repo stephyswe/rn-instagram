@@ -1395,4 +1395,9 @@ create Image - visit S3 Bucket to validate image file (public/image.png)
 issue: image doesn't show in home screen
 
 Commit: S3 upload image blob during Camera Screen
+
+https://docs.amplify.aws/react-native/build-a-backend/storage/download/
+
+Commit: Render Image from S3
+
 ```

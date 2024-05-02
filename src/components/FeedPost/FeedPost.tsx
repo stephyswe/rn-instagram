@@ -13,17 +13,14 @@ import styles from './styles';
 import {FeedNavigationProp} from '../../types/navigation';
 
 import Comment from '../Comment';
-import Carousel from '../Carousel';
-import DoublePressable from '../DoublePressable';
-import VideoPlayer from '../VideoPlayer';
 import PostMenu from './PostMenu';
+import Content from './Content';
 
 import {Post} from '../../API';
 
 import {DEFAULT_USER_IMAGE} from '../../config';
 
 import useLikeService from '../../services/LikeService';
-
 
 interface IFeedPost {
   post: Post;
@@ -59,28 +56,6 @@ const FeedPost = (props: IFeedPost) => {
     setIsDescriptionExpanded(v => !v);
   };
 
-  let content = null;
-  if (post.image) {
-    content = (
-      <DoublePressable onDoublePress={toggleLike}>
-        <Image
-          source={{
-            uri: post.image,
-          }}
-          style={styles.image}
-        />
-      </DoublePressable>
-    );
-  } else if (post.images) {
-    content = <Carousel images={post.images} onDoublePress={toggleLike} />;
-  } else if (post.video) {
-    content = (
-      <DoublePressable onDoublePress={toggleLike}>
-        <VideoPlayer uri={post.video} paused={!isVisible} />
-      </DoublePressable>
-    );
-  }
-
   return (
     <View style={styles.post}>
       {/* Header */}
@@ -100,7 +75,7 @@ const FeedPost = (props: IFeedPost) => {
       </View>
 
       {/* Content */}
-      {content}
+      <Content post={post} isVisible={isVisible} toggleLike={toggleLike} />
 
       {/* Footer */}
       <View style={styles.footer}>
