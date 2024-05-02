@@ -82,7 +82,9 @@ const CameraScreen = () => {
     };
 
     const result = await camera.current.takePictureAsync(options);
-    console.log(result);
+    navigation.navigate('Create', {
+      image: result.uri,
+    });
   };
 
   const startRecording = async () => {

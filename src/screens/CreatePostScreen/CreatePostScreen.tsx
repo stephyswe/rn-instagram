@@ -3,6 +3,7 @@ import {View, TextInput, Image, StyleSheet, Alert} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useMutation} from '@apollo/client';
 import {uploadData} from 'aws-amplify/storage';
+import {v4 as uuidV4} from 'uuid';
 
 import colors from '../../theme/colors';
 
@@ -72,9 +73,6 @@ const CreatePostScreen = () => {
       userID: userId,
     };
 
-    
-    
-
     // upload media files to S3 and get the key
     if (image) {
       const imageKey = await uploadMedia(image);
@@ -96,17 +94,15 @@ const CreatePostScreen = () => {
     try {
       // get the blob of the file from uri
       const response = await fetch(uri);
-      console.log('response', response);
       const blob = await response.blob();
+      var extension = blob.type.replace('image/', '');
 
       // upload the file (blob) to S3
       const s3Response = await uploadData({
-        key: 'image.png',
+        key: `${uuidV4()}.${extension}`,
         // Alternatively, path: ({identityId}) => `protected/${identityId}/album/2024/1.jpg`
         data: blob,
       }).result;
-
-      console.log(s3Response);
 
       // return key
       return s3Response.key;

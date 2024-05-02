@@ -1,3 +1,4 @@
+import 'react-native-get-random-values';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Amplify} from 'aws-amplify';
 import dayjs from 'dayjs';

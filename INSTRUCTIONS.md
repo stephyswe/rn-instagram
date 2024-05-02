@@ -1400,4 +1400,6 @@ https://docs.amplify.aws/react-native/build-a-backend/storage/download/
 
 Commit: Render Image from S3
 
+npm i uuid@^8.3.2 react-native-get-random-values@^1.8.0 --force
+
 ```
