@@ -5,6 +5,8 @@ import {Asset, launchImageLibrary} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {useLazyQuery, useMutation, useQuery} from '@apollo/client';
 import {deleteUser as deleteCognitoUser, signOut} from 'aws-amplify/auth';
+import {v4 as uuidV4} from 'uuid';
+import {uploadData} from 'aws-amplify/storage';
 
 import styles from './styles';
 
@@ -73,11 +75,39 @@ const EditProfileScreen = () => {
       ...formData,
     };
 
+    if (selectedPhoto?.uri) {
+      // upload the photo
+      input.image = await uploadMedia(selectedPhoto.uri);
+    }
+
     await doUpdateUser({
       variables: {input},
     });
     if (navigation.canGoBack()) {
       navigation.goBack();
+    }
+  };
+
+  const uploadMedia = async (uri: string) => {
+    try {
+      let blob;
+      let extension;
+
+      // For file URIs
+      const response = await fetch(uri);
+      blob = await response.blob();
+      extension = blob.type.replace('image/', '');
+
+      // upload the file (blob) to S3
+      const s3Response = await uploadData({
+        key: `${uuidV4()}.${extension}`,
+        data: blob,
+      }).result;
+
+      // return key
+      return s3Response.key;
+    } catch (error) {
+      Alert.alert('Error uploading the image', (error as Error).message);
     }
   };
 

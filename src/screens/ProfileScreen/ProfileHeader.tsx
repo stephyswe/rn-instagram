@@ -11,13 +11,15 @@ import {ProfileNavigationProp} from '../../types/navigation';
 import {User} from '../../API';
 import {DEFAULT_USER_IMAGE} from '../../config';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
+import {storageGet} from '../../config/s3get';
 
 interface IProfileHeader {
   user: User;
 }
 
 const ProfileHeader = ({user}: IProfileHeader) => {
+  const [imageUri, setImageUri] = useState<string | null>(null);
   const {userId} = useAuthContext();
   const navigation = useNavigation<ProfileNavigationProp>();
 
@@ -25,12 +27,18 @@ const ProfileHeader = ({user}: IProfileHeader) => {
     navigation.setOptions({title: user?.username || 'Profile'});
   }, [user?.username]);
 
+  useEffect(() => {
+    if (user.image) {
+      storageGet(user.image, setImageUri);
+    }
+  }, [user]);
+
   return (
     <View style={styles.root}>
       <View style={styles.headerRow}>
         {/* Profile image */}
         <Image
-          source={{uri: user.image || DEFAULT_USER_IMAGE}}
+          source={{uri: imageUri || DEFAULT_USER_IMAGE}}
           style={styles.avatar}
         />
 

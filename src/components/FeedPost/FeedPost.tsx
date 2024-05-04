@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
@@ -21,6 +21,7 @@ import {Post} from '../../API';
 import {DEFAULT_USER_IMAGE} from '../../config';
 
 import useLikeService from '../../services/LikeService';
+import {storageGet} from '../../config/s3get';
 
 interface IFeedPost {
   post: Post;
@@ -34,6 +35,13 @@ const FeedPost = (props: IFeedPost) => {
   const {toggleLike, postLikes, isLiked} = useLikeService(post);
 
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [imageUri, setImageUri] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (post.User?.image) {
+      storageGet(post.User.image, setImageUri);
+    }
+  }, [post]);
 
   const navigateToUser = () => {
     // navigate
@@ -63,7 +71,7 @@ const FeedPost = (props: IFeedPost) => {
       <View style={styles.header}>
         <Image
           source={{
-            uri: post.User?.image || DEFAULT_USER_IMAGE,
+            uri: imageUri || DEFAULT_USER_IMAGE,
           }}
           style={styles.userAvatar}
         />

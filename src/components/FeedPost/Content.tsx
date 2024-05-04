@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {View, Image, ActivityIndicator} from 'react-native';
-import {getUrl} from 'aws-amplify/storage';
 
 import Carousel from '../Carousel';
 import DoublePressable from '../DoublePressable';
@@ -9,6 +8,7 @@ import VideoPlayer from '../VideoPlayer';
 import styles from './styles';
 
 import {Post} from '../../API';
+import {storageGet} from '../../config/s3get';
 
 interface IContent {
   post: Post;
@@ -31,45 +31,18 @@ const Content = ({post, isVisible, toggleLike}: IContent) => {
         return;
       }
       // download the image
-      const getUrlResult = await getUrl({
-        key: post.image,
-        options: {
-          validateObjectExistence: false, // Check if object exists before creating a URL
-        },
-      });
-
-      setImageUri(getUrlResult.url.toString());
+      storageGet(post.image, setImageUri);
     } else if (post.images) {
-      const uris = await Promise.all(
-        post.images.map(async img => {
-          const getUrlResult = await getUrl({
-            key: img,
-            options: {
-              validateObjectExistence: false, // Check if object exists before creating a URL
-            },
-          });
-          return getUrlResult.url.toString();
-        }),
-      );
-      setImagesUri(uris);
+      storageGet(post.images, setImagesUri);
     } else if (post.video) {
-      const getUrlResult = await getUrl({
-        key: post.video,
-        options: {
-          validateObjectExistence: false, // Check if object exists before creating a URL
-        },
-      });
-      setVideoUri(getUrlResult.url.toString());
+      storageGet(post.video, setVideoUri);
     }
   };
 
   if (imageUri) {
     return (
       <DoublePressable onDoublePress={toggleLike}>
-        <Image
-          source={{uri: post.image?.startsWith('http') ? post.image : imageUri}}
-          style={styles.image}
-        />
+        <Image source={{uri: imageUri}} style={styles.image} />
       </DoublePressable>
     );
   } else if (imagesUri) {

@@ -1430,3 +1430,11 @@ Commit: Not working - Upload and Show Video in HomeScreen
 
 Commit: Uploading videos - progress bar in CreatePostScreen
 ```
+
+### 55_8.6 Profile_picture
+
+```
+RUN APP: EditProfile - change "bio" to something - validate change
+
+
+```
