@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {View, TextInput, Image, StyleSheet, Alert} from 'react-native';
+import {View, TextInput, Image, StyleSheet, Alert, Text} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useMutation} from '@apollo/client';
 import {uploadData} from 'aws-amplify/storage';
@@ -30,6 +30,7 @@ const CreatePostScreen = () => {
 
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const [doCreatePost] = useMutation<
     CreatePostMutation,
@@ -123,16 +124,23 @@ const CreatePostScreen = () => {
       } else {
         // For file URIs
         const response = await fetch(uri);
-        blob = await response.blob()
+        blob = await response.blob();
       }
 
-      extension = blob.type.replace('image/', ''); 
+      extension = blob.type.replace('image/', '');
 
       // upload the file (blob) to S3
       const s3Response = await uploadData({
         key: `${uuidV4()}.${extension}`,
         // Alternatively, path: ({identityId}) => `protected/${identityId}/album/2024/1.jpg`
         data: blob,
+        options: {
+          onProgress: ({transferredBytes, totalBytes}) => {
+            if (totalBytes) {
+              setProgress(transferredBytes / totalBytes);
+            }
+          },
+        },
       }).result;
 
       // return key
@@ -159,6 +167,13 @@ const CreatePostScreen = () => {
         text={isSubmitting ? 'Submitting...' : 'Submit'}
         onPress={submit}
       />
+
+      {isSubmitting && (
+        <View style={styles.progressContainer}>
+          <View style={[styles.progress, {width: `${progress * 100}%`}]} />
+          <Text>Uploading {Math.floor(progress * 100)}%</Text>
+        </View>
+      )}
     </KeyboardAwareScrollView>
   );
 };

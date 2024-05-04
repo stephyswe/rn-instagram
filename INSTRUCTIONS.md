@@ -1427,4 +1427,6 @@ npm i rn-fetch-blob@^0.12.0
 RUN APP: Select video - Submit - see post /w video in HomeScreen
 
 Commit: Not working - Upload and Show Video in HomeScreen
+
+Commit: Uploading videos - progress bar in CreatePostScreen
 ```
