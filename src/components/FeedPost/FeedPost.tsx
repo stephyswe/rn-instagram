@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
 
@@ -13,12 +13,11 @@ import styles from './styles';
 import {FeedNavigationProp} from '../../types/navigation';
 
 import Comment from '../Comment';
+import UserImage from '../UserImage';
 import PostMenu from './PostMenu';
 import Content from './Content';
 
 import {Post} from '../../API';
-
-import {DEFAULT_USER_IMAGE} from '../../config';
 
 import useLikeService from '../../services/LikeService';
 import {storageGet} from '../../config/s3get';
@@ -69,12 +68,7 @@ const FeedPost = (props: IFeedPost) => {
       {/* Header */}
 
       <View style={styles.header}>
-        <Image
-          source={{
-            uri: imageUri || DEFAULT_USER_IMAGE,
-          }}
-          style={styles.userAvatar}
-        />
+        <UserImage imageKey={post.User?.image} />
 
         <Text onPress={navigateToUser} style={styles.userName}>
           {post.User?.username}

@@ -1437,4 +1437,7 @@ Commit: Uploading videos - progress bar in CreatePostScreen
 RUN APP: EditProfile - change "bio" to something - validate change
 
 
+Commit: Profile Picture - get profile image from S3 
+
+Commit: Profile Picture - UserImage as Component
 ```

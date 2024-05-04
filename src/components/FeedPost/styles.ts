@@ -16,12 +16,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         padding: 10,
     },
-    userAvatar: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        marginRight: 10,
-    },
     userName: {
         fontWeight: fonts.weight.bold,
         color: colors.black,

@@ -1,17 +1,18 @@
-import {View, Image, Text} from 'react-native';
+import {useEffect, useState} from 'react';
+import {View, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {signOut} from 'aws-amplify/auth';
 
 import styles from './styles';
 
 import Button from '../../components/Button';
+import UserImage from '../../components/UserImage';
 
 import {ProfileNavigationProp} from '../../types/navigation';
 
 import {User} from '../../API';
-import {DEFAULT_USER_IMAGE} from '../../config';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {useEffect, useState} from 'react';
+
 import {storageGet} from '../../config/s3get';
 
 interface IProfileHeader {
@@ -37,10 +38,7 @@ const ProfileHeader = ({user}: IProfileHeader) => {
     <View style={styles.root}>
       <View style={styles.headerRow}>
         {/* Profile image */}
-        <Image
-          source={{uri: imageUri || DEFAULT_USER_IMAGE}}
-          style={styles.avatar}
-        />
+        <UserImage imageKey={imageUri} width={100} />
 
         {/* Posts, followers, following number */}
         <View style={styles.numberContainer}>

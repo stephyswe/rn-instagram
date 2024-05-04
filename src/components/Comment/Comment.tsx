@@ -1,12 +1,14 @@
 import {useState} from 'react';
-import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import dayjs from 'dayjs';
 
 import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
+
 import {Comment as CommentType} from '../../API';
-import {DEFAULT_USER_IMAGE} from '../../config';
+
+import UserImage from '../UserImage';
 
 interface ICommentProps {
   item: CommentType;
@@ -27,12 +29,7 @@ const Comment = ({
 
   return (
     <View style={styles.comment}>
-      {includeDetails && (
-        <Image
-          source={{uri: item.User?.image || DEFAULT_USER_IMAGE}}
-          style={styles.avatar}
-        />
-      )}
+      {includeDetails && <UserImage imageKey={item.User?.image} width={40} />}
 
       <View style={styles.middleColumn}>
         <Text style={styles.commentText}>
@@ -79,12 +76,6 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: fonts.weight.bold,
-  },
-  avatar: {
-    width: 40,
-    aspectRatio: 1,
-    borderRadius: 25,
-    marginRight: 5,
   },
   footer: {
     flexDirection: 'row',
