@@ -2,7 +2,7 @@ import {Image, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 import {DEFAULT_USER_IMAGE} from '../../config';
-import {storageGet} from '../../config/s3get';
+import {storageGet} from '../../config/s3';
 
 interface IUserImage {
   imageKey?: string | null;

@@ -13,7 +13,7 @@ import {ProfileNavigationProp} from '../../types/navigation';
 import {User} from '../../API';
 import {useAuthContext} from '../../contexts/AuthContext';
 
-import {storageGet} from '../../config/s3get';
+import {storageGet} from '../../config/s3';
 
 interface IProfileHeader {
   user: User;

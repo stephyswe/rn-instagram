@@ -1441,3 +1441,8 @@ Commit: Profile Picture - get profile image from S3
 
 Commit: Profile Picture - UserImage as Component
 ```
+
+### 56_8.7 Deleting_files
+
+...
+

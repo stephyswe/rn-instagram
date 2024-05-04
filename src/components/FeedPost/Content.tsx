@@ -8,7 +8,7 @@ import VideoPlayer from '../VideoPlayer';
 import styles from './styles';
 
 import {Post} from '../../API';
-import {storageGet} from '../../config/s3get';
+import {storageGet} from '../../config/s3';
 
 interface IContent {
   post: Post;

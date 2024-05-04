@@ -1,4 +1,4 @@
-import { getUrl } from 'aws-amplify/storage';
+import { getUrl, remove } from 'aws-amplify/storage';
 
 
 export const storageGet = async (images: string[] | string, setFunction: any) => {
@@ -20,3 +20,22 @@ export const storageGet = async (images: string[] | string, setFunction: any) =>
         setFunction(imageUrl);
     }
 }
+
+export const storageRemove = async (images: string[] | string) => {
+    const getImageUrl = async (img: string) => {
+        await remove({
+            key: img,
+            options: {
+                accessLevel: 'guest', // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+            },
+        });
+    };
+
+    if (Array.isArray(images)) {
+        await Promise.all(images.map(async img => await getImageUrl(img)));
+    } else {
+        await getImageUrl(images);
+    }
+};
+
+

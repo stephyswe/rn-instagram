@@ -22,6 +22,8 @@ import {useAuthContext} from '../../contexts/AuthContext';
 
 import {FeedNavigationProp} from '../../types/navigation';
 
+import {storageRemove} from '../../config/s3';
+
 interface IPostMenu {
   post: Post;
 }
@@ -38,6 +40,15 @@ const PostMenu = ({post}: IPostMenu) => {
   const isMyPost = userId === post.userID;
 
   const startDeletingPost = async () => {
+    // delete image, images or video
+    if (post.image) {
+      storageRemove(post.image);
+    } else if (post.images) {
+      storageRemove(post.images);
+    } else if (post.video) {
+      storageRemove(post.video);
+    }
+
     try {
       await doDeletePost();
     } catch (e) {

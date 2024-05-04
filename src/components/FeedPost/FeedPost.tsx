@@ -20,7 +20,7 @@ import Content from './Content';
 import {Post} from '../../API';
 
 import useLikeService from '../../services/LikeService';
-import {storageGet} from '../../config/s3get';
+import {storageGet} from '../../config/s3';
 
 interface IFeedPost {
   post: Post;
