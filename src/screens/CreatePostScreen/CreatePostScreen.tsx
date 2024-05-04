@@ -76,11 +76,12 @@ const CreatePostScreen = () => {
 
     // upload media files to S3 and get the key
     if (image) {
-      const imageKey = await uploadMedia(image);
-      input.image = imageKey;
+      input.image = await uploadMedia(image);
     } else if (images) {
       const imageKeys = await Promise.all(images.map(img => uploadMedia(img)));
       input.images = imageKeys.filter(key => key) as string[];
+    } else if (video) {
+      input.video = await uploadMedia(video);
     }
 
     try {
@@ -94,12 +95,38 @@ const CreatePostScreen = () => {
     }
   };
 
+  // Function to get file URI from content URI
+  /* const getFileUriFromContentUri = async (contentUri: string) => {
+    const filePath = `${RNFS.TemporaryDirectoryPath}/${uuidV4()}`; // Generate a temporary file path
+    await RNFS.copyAssetsFileIOS(contentUri, filePath, 0, 0); // Copy the content URI to the temporary file path
+    return filePath; // Return the temporary file path
+  }; */
+
+  /* const fetchResourceFromURI = async (uri: any) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    return blob;
+  }; */
+
   const uploadMedia = async (uri: string) => {
     try {
-      // get the blob of the file from uri
-      const response = await fetch(uri);
-      const blob = await response.blob();
-      var extension = blob.type.replace('image/', '');
+      let blob;
+      let extension;
+
+      // video handling (not complete)
+      if (uri.startsWith('content://')) {
+        /*  const path = RNFetchBlob.fs.asset(uri); 
+        blob = await RNFetchBlob.fs.readFile(path, 'base64'); 
+        extension = '.mp4';
+        blob.type = extension */
+        return;
+      } else {
+        // For file URIs
+        const response = await fetch(uri);
+        blob = await response.blob()
+      }
+
+      extension = blob.type.replace('image/', ''); 
 
       // upload the file (blob) to S3
       const s3Response = await uploadData({
@@ -111,7 +138,7 @@ const CreatePostScreen = () => {
       // return key
       return s3Response.key;
     } catch (error) {
-      Alert.alert('Error uploading the image');
+      Alert.alert('Error uploading the image', (error as Error).message);
     }
   };
 

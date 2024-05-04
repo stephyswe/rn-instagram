@@ -19,6 +19,7 @@ interface IContent {
 const Content = ({post, isVisible, toggleLike}: IContent) => {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [imagesUri, setImagesUri] = useState<string[] | null>(null);
+  const [videoUri, setVideoUri] = useState<string | null>(null);
 
   useEffect(() => {
     downloadMedia();
@@ -51,6 +52,14 @@ const Content = ({post, isVisible, toggleLike}: IContent) => {
         }),
       );
       setImagesUri(uris);
+    } else if (post.video) {
+      const getUrlResult = await getUrl({
+        key: post.video,
+        options: {
+          validateObjectExistence: false, // Check if object exists before creating a URL
+        },
+      });
+      setVideoUri(getUrlResult.url.toString());
     }
   };
 

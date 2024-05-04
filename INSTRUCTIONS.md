@@ -1418,3 +1418,13 @@ Commit: Inset in CameraScreen to Pull down Top menu
 ```
 RUN APP: Select two images from PhotoGallery - Submit - see post /w carousel in HomeScreen
 ```
+
+### 54_8.5_Uploading videos
+
+```
+npm i rn-fetch-blob@^0.12.0
+
+RUN APP: Select video - Submit - see post /w video in HomeScreen
+
+Commit: Not working - Upload and Show Video in HomeScreen
+```
